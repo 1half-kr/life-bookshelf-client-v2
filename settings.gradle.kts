@@ -22,3 +22,7 @@ dependencyResolutionManagement {
 rootProject.name = "bookshelf"
 include(":app")
 include(":build-logic")
+include(":core")
+include(":data")
+include(":domain")
+include(":feature")
