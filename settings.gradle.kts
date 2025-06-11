@@ -27,6 +27,7 @@ include(":app")
 
 include(":core")
 include(":core:ui")
+include(":core:navigation")
 
 include(":data")
 include(":domain")
