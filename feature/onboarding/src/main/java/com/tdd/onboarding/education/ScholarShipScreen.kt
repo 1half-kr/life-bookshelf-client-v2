@@ -18,8 +18,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tdd.design_system.BackGround
 import com.tdd.design_system.Next
-import com.tdd.design_system.UserAgeSemiTitle
-import com.tdd.design_system.UserAgeTitle
+import com.tdd.design_system.ScholarShipSemiTitle
+import com.tdd.design_system.ScholarShipTitle
 import com.tdd.domain.entity.request.CreateUserModel
 import com.tdd.onboarding.type.ScholarShipType
 import com.tdd.ui.common.button.BottomRectangleBtn
@@ -68,8 +68,8 @@ fun ScholarShipContent(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TopTitleContent(
-                title = UserAgeTitle,
-                semiTitle = UserAgeSemiTitle
+                title = ScholarShipTitle,
+                semiTitle = ScholarShipSemiTitle
             )
 
             Row(
