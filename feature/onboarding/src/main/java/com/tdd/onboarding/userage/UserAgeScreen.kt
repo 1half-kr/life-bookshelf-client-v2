@@ -17,19 +17,22 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tdd.design_system.BackGround
 import com.tdd.design_system.Next
+import com.tdd.domain.entity.request.CreateUserModel
 import com.tdd.onboarding.type.UserAgeType
 import com.tdd.ui.common.button.BottomRectangleBtn
 import com.tdd.ui.common.content.TopTitleContent
 import com.tdd.ui.common.item.SelectItem
 
 @Composable
-fun UserAgeScreen() {
+fun UserAgeScreen(
+    goToUserGenderPage: (CreateUserModel) -> Unit
+) {
 
     val viewModel: UserAgeViewModel = hiltViewModel()
     val uiState: UserAgePageState by viewModel.uiState.collectAsStateWithLifecycle()
 
     UserAgeContent(
-        onClickBtnAction = {},
+        onClickBtnAction = { goToUserGenderPage(viewModel.updateUserModel()) },
         selectedAgeType = uiState.selectedUserAge,
         onSelectAgeType = { viewModel.setSelectedAge(it) }
     )
