@@ -12,4 +12,5 @@ dependencies {
     implementation(projects.domain)
 
     implementation(projects.feature.onboarding)
+    implementation(projects.feature.interview)
 }

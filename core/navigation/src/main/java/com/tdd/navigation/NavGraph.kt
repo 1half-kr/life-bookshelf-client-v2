@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.tdd.domain.entity.request.CreateUserModel
+import com.tdd.interview.start.InterviewStartScreen
 import com.tdd.onboarding.OnBoardingScreen
 import com.tdd.onboarding.education.ScholarShipScreen
 import com.tdd.onboarding.gender.UserGenderScreen
@@ -81,7 +82,7 @@ fun NavGraphBuilder.interviewNavGraph(
         route = NavRoutes.InterViewGraph.route
     ) {
         composable(NavRoutes.StartInterViewScreen.route) {
-            //
+            InterviewStartScreen()
         }
     }
 }

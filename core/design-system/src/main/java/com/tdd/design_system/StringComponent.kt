@@ -18,3 +18,7 @@ const val SelectedMarriageTitle = "여행자님은 결혼하셨나요?"
 const val SelectedMarriageSemiTitle = "결혼은 인생의 큰 전환점이 되기도 하죠.\n여행자님은 결혼하셨나요?"
 const val CreateChapterTitle = "질문에 모두 답해주셨네요!"
 const val CreateChapterSemiTitle = "답해주신 내용으로 책을 만들기 위한 가장 적절한 챕터를 만들고 있어요.\n잠시만 기다려 주세요..."
+
+// Interview
+const val InterViewStartBtn = "인터뷰 시작"
+const val GoToHomeNotInterview = "인터뷰 없이 홈 이동하기"
