@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material3.Text
@@ -23,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -61,32 +64,7 @@ fun ChapterBottomSheet(
 
 @Composable
 fun ChapterBottomSheetContent(
-    chapter: InterviewChapterItem = InterviewChapterItem(
-        1,
-        "1",
-        "성장 과정",
-        "이거는 성장 과정임",
-        listOf(
-            InterviewSubChapterItem(
-                9,
-                "1.1",
-                "출생",
-                "이건 출생"
-            ),
-            InterviewSubChapterItem(
-                10,
-                "1.2",
-                "유년기",
-                "이건 유년기"
-            ),
-            InterviewSubChapterItem(
-                11,
-                "1.3",
-                "몰라",
-                "이건 몰라"
-            )
-        )
-    ),
+    chapter: InterviewChapterItem = InterviewChapterItem(),
     currentId: Int = 10,
     onClickClose: () -> Unit = {},
     interactionSource: MutableInteractionSource = MutableInteractionSource()
@@ -96,30 +74,11 @@ fun ChapterBottomSheetContent(
             .fillMaxWidth()
             .background(BackGround)
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_close),
-            contentDescription = "close",
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(top = 15.dp, end = 15.dp)
-                .size(45.dp)
-                .clickable(
-                    interactionSource = interactionSource,
-                    indication = null,
-                    onClick = onClickClose
-                )
-        )
-
         Column {
-//            Box(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .height(170.dp)
-//                    .background(Gray5)
-//            )
             Image(
                 painter = painterResource(id = R.drawable.ic_chapter_one),
                 contentDescription = "chapter background",
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(170.dp)
@@ -152,6 +111,20 @@ fun ChapterBottomSheetContent(
                 currentId = currentId
             )
         }
+
+        Image(
+            painter = painterResource(id = R.drawable.ic_close),
+            contentDescription = "close",
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(top = 15.dp, end = 15.dp)
+                .size(45.dp)
+                .clickable(
+                    interactionSource = interactionSource,
+                    indication = null,
+                    onClick = onClickClose
+                )
+        )
     }
 }
 
@@ -160,14 +133,16 @@ fun ChapterBottomSheetDetail(
     subChapters: List<InterviewSubChapterItem>,
     currentId: Int,
 ) {
-    subChapters.forEach { subChapter ->
-        ChapterDetailItem(
-            subChapter = subChapter,
-            isProgress = (subChapter.chapterId == currentId),
-            isFinish = (subChapter.chapterId < currentId)
-        )
+    LazyColumn {
+        items(subChapters) { subChapter ->
+            ChapterDetailItem(
+                subChapter = subChapter,
+                isProgress = (subChapter.chapterId == currentId),
+                isFinish = (subChapter.chapterId < currentId)
+            )
 
-        Divider(modifier = Modifier.border(2.dp, color = White4))
+            Divider(modifier = Modifier.border(2.dp, color = White4))
+        }
     }
 }
 
