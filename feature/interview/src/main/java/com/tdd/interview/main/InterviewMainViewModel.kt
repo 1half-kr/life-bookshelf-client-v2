@@ -1,4 +1,4 @@
-package com.tdd.interview.start
+package com.tdd.interview.main
 
 import androidx.lifecycle.viewModelScope
 import com.tdd.domain.entity.enum.ChattingType
@@ -10,10 +10,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class InterviewViewModel @Inject constructor(
+class InterviewMainViewModel @Inject constructor(
 
-): BaseViewModel<InterviewPageState>(
-    InterviewPageState()
+): BaseViewModel<InterviewMainPageState>(
+    InterviewMainPageState()
 ) {
     init {
         setInterviewChatting()

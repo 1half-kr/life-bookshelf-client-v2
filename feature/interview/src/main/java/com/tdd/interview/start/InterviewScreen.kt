@@ -27,6 +27,8 @@ import com.tdd.design_system.BookShelfTypo
 import com.tdd.design_system.InterviewTitle
 import com.tdd.design_system.Main3
 import com.tdd.design_system.R
+import com.tdd.domain.entity.response.interview.InterviewChattingModel.Chatting
+import com.tdd.ui.common.content.InterviewChatting
 
 @Composable
 fun InterviewScreen(
@@ -39,7 +41,8 @@ fun InterviewScreen(
 
     InterviewContent(
         onClickHomeBtn = { goHomePage() },
-        interactionSource = interactionSource
+        interactionSource = interactionSource,
+        chattingList = uiState.chattingList
     )
 }
 
@@ -47,6 +50,7 @@ fun InterviewScreen(
 fun InterviewContent(
     onClickHomeBtn: () -> Unit = {},
     interactionSource: MutableInteractionSource = MutableInteractionSource(),
+    chattingList: List<Chatting> = emptyList(),
 ) {
     Column(
         modifier = Modifier
@@ -81,6 +85,13 @@ fun InterviewContent(
                     )
             )
         }
+
+        InterviewChatting(
+            chattingList = chattingList,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+        )
     }
 }
 
