@@ -7,4 +7,5 @@ sealed class NavRoutes(val route: String) {
     data object UserAgeScreen: NavRoutes("user_age")
     data object UserGenderScreen: NavRoutes("user_gender")
     data object ScholarShipScreen: NavRoutes("scholarship")
+    data object MarriageScreen: NavRoutes("marriage")
 }
