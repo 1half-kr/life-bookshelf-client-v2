@@ -8,10 +8,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tdd.design_system.BackGround
 import com.tdd.design_system.Next
 import com.tdd.onboarding.type.UserAgeType
@@ -22,10 +25,13 @@ import com.tdd.ui.common.item.SelectItem
 @Composable
 fun UserAgeScreen() {
 
+    val viewModel: UserAgeViewModel = hiltViewModel()
+    val uiState: UserAgePageState by viewModel.uiState.collectAsStateWithLifecycle()
+
     UserAgeContent(
         onClickBtnAction = {},
-        selectedAgeType = "",
-        onSelectAgeType = {}
+        selectedAgeType = uiState.selectedUserAge,
+        onSelectAgeType = { viewModel.setSelectedAge(it) }
     )
 }
 
@@ -101,7 +107,7 @@ fun UserAgeContent(
 
         BottomRectangleBtn(
             btnTextContent = Next,
-            isBtnActivated = true,
+            isBtnActivated = (selectedAgeType.isNotEmpty()),
             onClickAction = onClickBtnAction
         )
     }
