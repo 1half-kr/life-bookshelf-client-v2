@@ -13,4 +13,5 @@ dependencies {
 
     implementation(projects.feature.onboarding)
     implementation(projects.feature.interview)
+    implementation(projects.feature.interviewchapter)
 }

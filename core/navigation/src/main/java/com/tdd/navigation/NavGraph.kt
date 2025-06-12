@@ -7,6 +7,7 @@ import androidx.navigation.navigation
 import com.tdd.domain.entity.request.CreateUserModel
 import com.tdd.interview.InterviewScreen
 import com.tdd.interview.start.InterviewStartScreen
+import com.tdd.interviewchapter.InterviewChapterContent
 import com.tdd.onboarding.OnBoardingScreen
 import com.tdd.onboarding.education.ScholarShipScreen
 import com.tdd.onboarding.gender.UserGenderScreen
@@ -87,13 +88,26 @@ fun NavGraphBuilder.interviewNavGraph(
             InterviewStartScreen(
                 showInterviewDialog = showDialog,
                 goHomePage = {
-                    //
+                    navController.navigate(NavRoutes.InterviewChapterScreen.route)
                 }
             )
         }
 
         composable(NavRoutes.InterviewScreen.route) {
             InterviewScreen()
+        }
+    }
+}
+
+fun NavGraphBuilder.interviewChapterNavGraph(
+    navController: NavController
+) {
+    navigation(
+        startDestination = NavRoutes.InterviewChapterScreen.route,
+        route = NavRoutes.InterviewChapterGraph.route
+    ) {
+        composable(NavRoutes.InterviewChapterScreen.route) {
+            InterviewChapterContent()
         }
     }
 }

@@ -13,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.tdd.domain.entity.request.CreateUserModel
 import com.tdd.navigation.NavRoutes
+import com.tdd.navigation.interviewChapterNavGraph
 import com.tdd.navigation.interviewNavGraph
 import com.tdd.navigation.onBoardingNavGraph
 import com.tdd.ui.common.dialog.InterviewTypeDialog
@@ -65,6 +66,9 @@ fun MainScreen() {
                 interviewNavGraph(
                     navController = navController,
                     showDialog = showDialog
+                )
+                interviewChapterNavGraph(
+                    navController = navController
                 )
             }
         }
