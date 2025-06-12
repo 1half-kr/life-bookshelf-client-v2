@@ -55,6 +55,18 @@ object BookShelfTypo {
         fontWeight = FontWeight.Medium
     )
 
+    val body50: TextStyle = TextStyle(
+        fontSize = 14.sp,
+        fontFamily = fontFamily,
+        fontWeight = FontWeight.SemiBold
+    )
+
+    val body60: TextStyle = TextStyle(
+        fontSize = 14.sp,
+        fontFamily = fontFamily,
+        fontWeight = FontWeight.Medium
+    )
+
     val caption10: TextStyle = TextStyle(
         fontSize = 32.sp,
         fontFamily = fontFamily,

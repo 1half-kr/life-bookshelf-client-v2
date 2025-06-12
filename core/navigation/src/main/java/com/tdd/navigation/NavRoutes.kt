@@ -13,4 +13,10 @@ sealed class NavRoutes(val route: String) {
     // InterView Graph
     data object InterViewGraph: NavRoutes("interview_graph")
     data object StartInterViewScreen: NavRoutes("start_interview")
+    data object InterviewScreen: NavRoutes("interview")
+    data object InterviewMainScreen: NavRoutes("interview_main")
+
+    // Interview Chapter Graph
+    data object InterviewChapterGraph: NavRoutes("interview_chapter_graph")
+    data object InterviewChapterScreen: NavRoutes("interview_chapter")
 }

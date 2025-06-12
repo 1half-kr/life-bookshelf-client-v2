@@ -1,4 +1,4 @@
-package com.tdd.interview.start
+package com.tdd.interview.start.ready
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,17 +29,24 @@ import com.tdd.ui.common.button.BottomRectangleBtn
 import com.tdd.ui.common.content.TopTitleContent
 
 @Composable
-fun InterviewStartScreen() {
+fun InterviewStartScreen(
+    showInterviewDialog: () -> Unit,
+    goHomePage: () -> Unit = {}
+) {
     val interactionSource = remember { MutableInteractionSource() }
 
     InterviewStartContent(
-        interactionSource = interactionSource
+        interactionSource = interactionSource,
+        showInterviewDialog = showInterviewDialog,
+        onClickGoHomeBtn = { goHomePage() }
     )
 }
 
 @Composable
 fun InterviewStartContent(
     interactionSource: MutableInteractionSource = MutableInteractionSource(),
+    showInterviewDialog: () -> Unit = {},
+    onClickGoHomeBtn: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -69,7 +76,7 @@ fun InterviewStartContent(
         BottomRectangleBtn(
             btnTextContent = InterViewStartBtn,
             isBtnActivated = true,
-            onClickAction = {}
+            onClickAction = showInterviewDialog
         )
 
         Text(
@@ -82,7 +89,7 @@ fun InterviewStartContent(
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 10.dp, bottom = 35.dp)
                 .clickable(
-                    onClick = {},
+                    onClick = onClickGoHomeBtn,
                     interactionSource = interactionSource,
                     indication = null
                 )
@@ -92,6 +99,6 @@ fun InterviewStartContent(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewInterview() {
+fun PreviewStartInterview() {
     InterviewStartContent()
 }

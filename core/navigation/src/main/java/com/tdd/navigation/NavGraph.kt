@@ -5,7 +5,12 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.tdd.domain.entity.request.CreateUserModel
-import com.tdd.interview.start.InterviewStartScreen
+import com.tdd.domain.entity.response.interview.InterviewChapterItem
+import com.tdd.interview.main.InterviewMainScreen
+import com.tdd.interview.start.InterviewScreen
+import com.tdd.interview.start.ready.InterviewStartScreen
+import com.tdd.interviewchapter.InterviewChapterContent
+import com.tdd.interviewchapter.InterviewChapterScreen
 import com.tdd.onboarding.OnBoardingScreen
 import com.tdd.onboarding.education.ScholarShipScreen
 import com.tdd.onboarding.gender.UserGenderScreen
@@ -76,13 +81,51 @@ fun NavGraphBuilder.onBoardingNavGraph(
 
 fun NavGraphBuilder.interviewNavGraph(
     navController: NavController,
+    showDialog: () -> Unit
 ) {
     navigation(
         startDestination = NavRoutes.StartInterViewScreen.route,
         route = NavRoutes.InterViewGraph.route
     ) {
         composable(NavRoutes.StartInterViewScreen.route) {
-            InterviewStartScreen()
+            InterviewStartScreen(
+                showInterviewDialog = showDialog,
+                goHomePage = {
+                    navController.navigate(NavRoutes.InterviewChapterScreen.route) {
+                        popUpTo(0)
+                    }
+                }
+            )
+        }
+
+        composable(NavRoutes.InterviewScreen.route) {
+            InterviewScreen(
+                goHomePage = {
+                    navController.navigate(NavRoutes.InterviewChapterScreen.route) {
+                        popUpTo(0)
+                    }
+                }
+            )
+        }
+
+        composable(NavRoutes.InterviewMainScreen.route) {
+            InterviewMainScreen()
+        }
+    }
+}
+
+fun NavGraphBuilder.interviewChapterNavGraph(
+    navController: NavController,
+    showChapterBottomSheet: (Int, InterviewChapterItem) -> Unit
+) {
+    navigation(
+        startDestination = NavRoutes.InterviewChapterScreen.route,
+        route = NavRoutes.InterviewChapterGraph.route
+    ) {
+        composable(NavRoutes.InterviewChapterScreen.route) {
+            InterviewChapterScreen(
+                showChapterBottomSheet = showChapterBottomSheet
+            )
         }
     }
 }
