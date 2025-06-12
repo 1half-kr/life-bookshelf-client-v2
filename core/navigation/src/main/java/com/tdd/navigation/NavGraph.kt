@@ -88,13 +88,21 @@ fun NavGraphBuilder.interviewNavGraph(
             InterviewStartScreen(
                 showInterviewDialog = showDialog,
                 goHomePage = {
-                    navController.navigate(NavRoutes.InterviewChapterScreen.route)
+                    navController.navigate(NavRoutes.InterviewChapterScreen.route) {
+                        popUpTo(0)
+                    }
                 }
             )
         }
 
         composable(NavRoutes.InterviewScreen.route) {
-            InterviewScreen()
+            InterviewScreen(
+                goHomePage = {
+                    navController.navigate(NavRoutes.InterviewChapterScreen.route) {
+                        popUpTo(0)
+                    }
+                }
+            )
         }
     }
 }

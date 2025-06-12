@@ -2,6 +2,8 @@ package com.tdd.interview
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +14,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -26,16 +29,25 @@ import com.tdd.design_system.Main3
 import com.tdd.design_system.R
 
 @Composable
-fun InterviewScreen() {
+fun InterviewScreen(
+    goHomePage: () -> Unit
+) {
 
     val viewModel: InterviewViewModel = hiltViewModel()
     val uiState: InterviewPageState by viewModel.uiState.collectAsStateWithLifecycle()
+    val interactionSource = remember { MutableInteractionSource() }
 
-    InterviewContent()
+    InterviewContent(
+        onClickHomeBtn = { goHomePage() },
+        interactionSource = interactionSource
+    )
 }
 
 @Composable
-fun InterviewContent() {
+fun InterviewContent(
+    onClickHomeBtn: () -> Unit = {},
+    interactionSource: MutableInteractionSource = MutableInteractionSource(),
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -62,6 +74,11 @@ fun InterviewContent() {
                     .align(Alignment.CenterEnd)
                     .padding(end = 50.dp)
                     .size(40.dp)
+                    .clickable(
+                        onClick = onClickHomeBtn,
+                        interactionSource = interactionSource,
+                        indication = null
+                    )
             )
         }
     }
