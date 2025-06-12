@@ -41,6 +41,7 @@ import com.tdd.navigation.NavRoutes
 import com.tdd.navigation.interviewChapterNavGraph
 import com.tdd.navigation.interviewNavGraph
 import com.tdd.navigation.onBoardingNavGraph
+import com.tdd.navigation.progressNavGraph
 import com.tdd.ui.common.bottomsheet.ChapterBottomSheet
 import com.tdd.ui.common.dialog.InterviewTypeDialog
 import com.tdd.ui.common.type.BottomSheetType
@@ -176,6 +177,9 @@ fun MainScreen() {
                     interviewChapterNavGraph(
                         navController = navController,
                         showChapterBottomSheet = showChapterBottomSheet
+                    )
+                    progressNavGraph(
+                        navController = navController
                     )
                 }
             }

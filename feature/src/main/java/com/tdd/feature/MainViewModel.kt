@@ -30,7 +30,9 @@ class MainViewModel @Inject constructor(
                 BottomNavType.CHAPTER
             }
 
-            // BottomNavType.PROGRESS
+            NavRoutes.ProgressScreen.route -> {
+                BottomNavType.PROGRESS
+            }
 
             else -> {
                 BottomNavType.DEFAULT

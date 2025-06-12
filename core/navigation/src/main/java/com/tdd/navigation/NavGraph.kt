@@ -16,6 +16,7 @@ import com.tdd.onboarding.education.ScholarShipScreen
 import com.tdd.onboarding.gender.UserGenderScreen
 import com.tdd.onboarding.marriage.MarriageScreen
 import com.tdd.onboarding.userage.UserAgeScreen
+import com.tdd.progress.ProgressScreen
 import kotlinx.coroutines.flow.SharedFlow
 
 fun NavGraphBuilder.onBoardingNavGraph(
@@ -126,6 +127,19 @@ fun NavGraphBuilder.interviewChapterNavGraph(
             InterviewChapterScreen(
                 showChapterBottomSheet = showChapterBottomSheet
             )
+        }
+    }
+}
+
+fun NavGraphBuilder.progressNavGraph(
+    navController: NavController
+) {
+    navigation(
+        startDestination = NavRoutes.ProgressScreen.route,
+        route = NavRoutes.ProgressGraph.route
+    ) {
+        composable(NavRoutes.ProgressScreen.route) {
+            ProgressScreen()
         }
     }
 }
