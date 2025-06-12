@@ -5,8 +5,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.tdd.domain.entity.request.CreateUserModel
-import com.tdd.interview.InterviewScreen
-import com.tdd.interview.start.InterviewStartScreen
+import com.tdd.interview.start.InterviewScreen
+import com.tdd.interview.start.ready.InterviewStartScreen
 import com.tdd.interviewchapter.InterviewChapterContent
 import com.tdd.onboarding.OnBoardingScreen
 import com.tdd.onboarding.education.ScholarShipScreen

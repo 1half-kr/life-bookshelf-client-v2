@@ -1,4 +1,4 @@
-package com.tdd.interview
+package com.tdd.interview.start
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

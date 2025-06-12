@@ -1,4 +1,4 @@
-package com.tdd.interview
+package com.tdd.interview.start
 
 import com.tdd.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

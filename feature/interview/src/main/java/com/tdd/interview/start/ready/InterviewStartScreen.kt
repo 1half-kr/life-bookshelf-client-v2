@@ -1,4 +1,4 @@
-package com.tdd.interview.start
+package com.tdd.interview.start.ready
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -99,6 +99,6 @@ fun InterviewStartContent(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewInterview() {
+fun PreviewStartInterview() {
     InterviewStartContent()
 }
