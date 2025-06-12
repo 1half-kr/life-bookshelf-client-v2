@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.tdd.domain.entity.request.CreateUserModel
+import com.tdd.onboarding.OnBoardingScreen
 import com.tdd.onboarding.education.ScholarShipScreen
 import com.tdd.onboarding.gender.UserGenderScreen
 import com.tdd.onboarding.marriage.MarriageScreen
@@ -54,8 +55,33 @@ fun NavGraphBuilder.onBoardingNavGraph(
                 userModel = userModel,
                 goToCreateChapterPage = {
                     setUserModel(it)
+                    navController.navigate(NavRoutes.OnBoardingScreen.route)
                 }
             )
+        }
+
+        composable(NavRoutes.OnBoardingScreen.route) {
+            OnBoardingScreen(
+                userModel = userModel,
+                goToInterviewPage = {
+                    navController.navigate(NavRoutes.StartInterViewScreen.route) {
+                        popUpTo(0)
+                    }
+                }
+            )
+        }
+    }
+}
+
+fun NavGraphBuilder.interviewNavGraph(
+    navController: NavController,
+) {
+    navigation(
+        startDestination = NavRoutes.StartInterViewScreen.route,
+        route = NavRoutes.InterViewGraph.route
+    ) {
+        composable(NavRoutes.StartInterViewScreen.route) {
+            //
         }
     }
 }
