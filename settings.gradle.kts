@@ -32,5 +32,7 @@ include(":core:design-system")
 
 include(":data")
 include(":domain")
+
 include(":feature")
 include(":feature:onboarding")
+include(":feature:interview")
