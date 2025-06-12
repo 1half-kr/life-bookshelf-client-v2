@@ -9,4 +9,8 @@ android {
 
 dependencies {
     implementation(projects.core)
+    implementation(projects.domain)
+
+    implementation(projects.feature.onboarding)
+    implementation(projects.feature.interview)
 }

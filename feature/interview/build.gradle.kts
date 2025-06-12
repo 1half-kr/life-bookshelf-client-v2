@@ -4,11 +4,12 @@ plugins {
 }
 
 android {
-    namespace = "com.tdd.ui"
+    namespace = "com.tdd.interview"
 }
 
 dependencies {
-    implementation(projects.core)
-    implementation(projects.core.designSystem)
     implementation(projects.domain)
+    implementation(projects.core)
+    implementation(projects.core.ui)
+    implementation(projects.core.designSystem)
 }
