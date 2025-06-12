@@ -3,14 +3,16 @@ package com.tdd.interviewchapter
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,44 +39,36 @@ fun InterviewChapterScreen() {
     InterviewChapterContent()
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun InterviewChapterContent() {
-    Column(
+    BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
-            .background(BackGround),
+            .background(BackGround)
     ) {
-        TopPageTitle(
-            title = InterviewChapterTitle
-        )
+        val itemSpacing = 40.dp
+        val itemWidth = 160.dp
 
-        Column(
-            modifier = Modifier
-                .weight(1f),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(40.dp, Alignment.CenterHorizontally)
-            ) {
-                ChapterType.entries.take(4).forEach { chapter ->
-                    InterviewChapterItem(
-                        chapter = chapter
-                    )
-                }
-            }
+        val itemsPerRow = if (maxWidth < 600.dp) 2 else 4
+        val totalSpacing = itemSpacing * (itemsPerRow - 1)
+        val totalContentWidth = itemWidth * itemsPerRow + totalSpacing
 
-            Row(
+        Column {
+            TopPageTitle(title = InterviewChapterTitle)
+
+            FlowRow(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 25.dp),
-                horizontalArrangement = Arrangement.spacedBy(40.dp, Alignment.CenterHorizontally)
+                    .widthIn(max = totalContentWidth)
+                    .align(Alignment.CenterHorizontally)
+                    .weight(1f),
+                horizontalArrangement = Arrangement.spacedBy(itemSpacing),
+                verticalArrangement = Arrangement.spacedBy(25.dp, Alignment.CenterVertically)
             ) {
-                ChapterType.entries.drop(4).forEach { chapter ->
+                ChapterType.entries.forEach { chapter ->
                     InterviewChapterItem(
-                        chapter = chapter
+                        chapter = chapter,
+                        modifier = Modifier.width(itemWidth)
                     )
                 }
             }
@@ -85,8 +79,10 @@ fun InterviewChapterContent() {
 @Composable
 fun InterviewChapterItem(
     chapter: ChapterType,
+    modifier: Modifier,
 ) {
     Column(
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(

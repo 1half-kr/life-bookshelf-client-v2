@@ -9,6 +9,7 @@ import com.tdd.interview.main.InterviewMainScreen
 import com.tdd.interview.start.InterviewScreen
 import com.tdd.interview.start.ready.InterviewStartScreen
 import com.tdd.interviewchapter.InterviewChapterContent
+import com.tdd.interviewchapter.InterviewChapterScreen
 import com.tdd.onboarding.OnBoardingScreen
 import com.tdd.onboarding.education.ScholarShipScreen
 import com.tdd.onboarding.gender.UserGenderScreen
@@ -120,7 +121,7 @@ fun NavGraphBuilder.interviewChapterNavGraph(
         route = NavRoutes.InterviewChapterGraph.route
     ) {
         composable(NavRoutes.InterviewChapterScreen.route) {
-            InterviewChapterContent()
+            InterviewChapterScreen()
         }
     }
 }
