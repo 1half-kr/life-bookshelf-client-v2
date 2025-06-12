@@ -29,7 +29,7 @@ enum class BottomNavType(
         ProgressTitle,
         R.drawable.ic_bottom_progress_on,
         R.drawable.ic_bottom_progress_off,
-        ""
+        NavRoutes.ProgressScreen.route
     ),
     DEFAULT(Empty, -1, -1, "");
 

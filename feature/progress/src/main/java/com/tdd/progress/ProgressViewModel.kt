@@ -18,7 +18,7 @@ class ProgressViewModel @Inject constructor(
     private fun initSetProgressStep() {
         val progressStep: List<ProgressStepItem> = listOf(
             ProgressStepItem(1, "인터뷰 진행", "자서전 생성을 위해\n인터뷰를 진행해요", true, false),
-            ProgressStepItem(2, "출판 신청", "챕터 생성이 끝났어요.\n출판 신청을 해보세요!", true, true),
+            ProgressStepItem(2, "출판 신청", "챕터 생성이 끝났어요.\n출판 신청을 해보세요!", false, true),
             ProgressStepItem(3, "문법 교정", "자서전 생성이 끝나 문법\n교정을 진행하고 있어요", false, false),
             ProgressStepItem(4, "기업 검토", "최종적으로 기업에서\n자서전을 검토 중이에요.", false, false),
             ProgressStepItem(5, "출판 진행", "자서전 최종 출판을\n진행하고 있어요", false, false),

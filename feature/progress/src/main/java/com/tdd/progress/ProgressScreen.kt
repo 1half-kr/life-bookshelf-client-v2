@@ -8,9 +8,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -91,7 +94,7 @@ fun ProgressStepList(
         color = Black1,
         style = BookShelfTypo.body30,
         modifier = Modifier
-            .padding(top = 30.dp, start = 50.dp)
+            .padding(start = 50.dp)
     )
 
     LazyRow(
@@ -114,6 +117,7 @@ fun ProgressStepItemContent(
 ) {
     Column(
         modifier = Modifier
+            .width(250.dp)
             .clip(RoundedCornerShape(8.dp))
             .background(if (step.isProgress) Main3 else White2)
             .border(1.dp, Gray4, RoundedCornerShape(8.dp)),
@@ -200,6 +204,8 @@ fun ProgressBookList(
                 style = BookShelfTypo.head30,
                 textAlign = TextAlign.Center,
             )
+
+            Spacer(modifier = Modifier.height(20.dp))
 
             Text(
                 text = ProgressBookEmptySemiTitle,
