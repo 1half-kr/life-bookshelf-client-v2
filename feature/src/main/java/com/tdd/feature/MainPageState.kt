@@ -4,5 +4,6 @@ import com.tdd.ui.base.PageState
 import com.tdd.ui.common.type.InterviewType
 
 data class MainPageState (
-    val interviewType: InterviewType = InterviewType.MIRROR
+    val interviewType: InterviewType = InterviewType.MIRROR,
+    val bottomNavType: BottomNavType = BottomNavType.DEFAULT,
 ): PageState

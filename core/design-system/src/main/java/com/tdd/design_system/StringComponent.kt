@@ -8,6 +8,7 @@ const val Blank = " "
 const val Next = "다음"
 const val InterviewTitle = "인터뷰"
 const val InterviewChapterTitle = "인터뷰 챕터"
+const val ProgressTitle = "나의 출판 진행"
 
 // OnBoarding
 const val UserAgeTitle = "여행자님의 나이가 궁금해요."

@@ -1,6 +1,7 @@
 package com.tdd.feature
 
 import com.tdd.domain.entity.request.CreateUserModel
+import com.tdd.navigation.NavRoutes
 import com.tdd.ui.base.BaseViewModel
 import com.tdd.ui.base.PageState
 import com.tdd.ui.common.type.InterviewType
@@ -17,6 +18,34 @@ class MainViewModel @Inject constructor(
 ) {
 
     val userModel = MutableSharedFlow<CreateUserModel>(replay = 1)
+
+    fun setBottomNavType(route: String?) {
+        val type = when (route) {
+            NavRoutes.InterviewScreen.route -> {
+                BottomNavType.INTERVIEW
+            }
+
+            NavRoutes.InterviewChapterScreen.route -> {
+                BottomNavType.CHAPTER
+            }
+
+            // BottomNavType.PROGRESS
+
+            else -> {
+                BottomNavType.DEFAULT
+            }
+        }
+
+        updateBottomNav(type)
+    }
+
+    private fun updateBottomNav(type: BottomNavType) {
+        updateState(
+            uiState.value.copy(
+                bottomNavType = type
+            )
+        )
+    }
 
     fun setInterviewType(type: InterviewType) {
         updateState(
