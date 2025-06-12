@@ -38,19 +38,19 @@ import com.tdd.design_system.MirrorInterviewType
 import com.tdd.design_system.R
 import com.tdd.ui.common.button.BottomRectangleBtn
 import com.tdd.ui.common.content.TopTitleContent
+import com.tdd.ui.common.type.InterviewType
 
 @Composable
 fun InterviewTypeDialog(
-    onSelectMirrorType: () -> Unit,
-    onSelectAppType: () -> Unit,
+    onSelectType: (InterviewType) -> Unit,
     onDismiss: () -> Unit,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
 
     InterviewTypeDialogContent(
         interactionSource = interactionSource,
-        onSelectMirrorType = onSelectMirrorType,
-        onSelectAppType = onSelectAppType,
+        onSelectMirrorType = { onSelectType(InterviewType.MIRROR) },
+        onSelectAppType = { onSelectType(InterviewType.APP) },
         onDismiss = onDismiss,
     )
 }
@@ -78,7 +78,7 @@ fun InterviewTypeDialogContent(
 //                    .widthIn(max = maxDialogWidth)
 //                    .padding(horizontal = horizontalPadding)
                     .wrapContentHeight()
-                .width(750.dp)
+                    .width(750.dp)
                 ,
                 shape = RoundedCornerShape(16.dp),
                 backgroundColor = BackGround

@@ -40,13 +40,10 @@ fun MainScreen() {
     DismissKeyboardOnClick {
         if (isShowDialog.value) {
             InterviewTypeDialog(
-                onSelectMirrorType = {
-                    viewModel.setInterviewType(InterviewType.MIRROR)
+                onSelectType = { type ->
+                    viewModel.setInterviewType(type)
                     isShowDialog.value = false
-                },
-                onSelectAppType = {
-                    viewModel.setInterviewType(InterviewType.APP)
-                    isShowDialog.value = false
+                    navController.navigate(NavRoutes.InterviewScreen.route)
                 },
                 onDismiss = { isShowDialog.value = false },
             )

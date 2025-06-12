@@ -6,6 +6,7 @@ const val Empty = ""
 const val Blank = " "
 
 const val Next = "다음"
+const val InterviewTitle = "인터뷰"
 
 // OnBoarding
 const val UserAgeTitle = "여행자님의 나이가 궁금해요."
