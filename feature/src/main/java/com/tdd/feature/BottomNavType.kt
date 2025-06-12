@@ -17,7 +17,7 @@ enum class BottomNavType(
         InterviewTitle,
         R.drawable.ic_bottom_interview_on,
         R.drawable.ic_bottom_interview_off,
-        NavRoutes.InterviewScreen.route
+        NavRoutes.InterviewMainScreen.route
     ),
     CHAPTER(
         InterviewChapterTitle,

@@ -21,7 +21,7 @@ class MainViewModel @Inject constructor(
 
     fun setBottomNavType(route: String?) {
         val type = when (route) {
-            NavRoutes.InterviewScreen.route -> {
+            NavRoutes.InterviewMainScreen.route -> {
                 BottomNavType.INTERVIEW
             }
 
