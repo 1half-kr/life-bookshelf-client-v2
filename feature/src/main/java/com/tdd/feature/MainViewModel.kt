@@ -1,9 +1,10 @@
 package com.tdd.feature
 
 import com.tdd.domain.entity.request.CreateUserModel
+import com.tdd.domain.entity.response.interview.InterviewChapterItem
 import com.tdd.navigation.NavRoutes
 import com.tdd.ui.base.BaseViewModel
-import com.tdd.ui.base.PageState
+import com.tdd.ui.common.type.BottomSheetType
 import com.tdd.ui.common.type.InterviewType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -13,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
 
-): BaseViewModel<MainPageState>(
+) : BaseViewModel<MainPageState>(
     MainPageState()
 ) {
 
@@ -55,5 +56,15 @@ class MainViewModel @Inject constructor(
         )
 
         Timber.d("[인터뷰] $type")
+    }
+
+    fun setChapterBottomSheet(id: Int, chapter: InterviewChapterItem) {
+        updateState(
+            uiState.value.copy(
+                currentChapterId = id,
+                selectedChapter = chapter,
+                bottomSheetType = BottomSheetType.CHAPTER
+            )
+        )
     }
 }

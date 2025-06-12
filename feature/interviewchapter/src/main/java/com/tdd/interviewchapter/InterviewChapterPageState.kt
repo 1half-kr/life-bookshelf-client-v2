@@ -6,5 +6,6 @@ import com.tdd.ui.base.PageState
 
 data class InterviewChapterPageState(
     val chapterList: InterviewChapterModel = InterviewChapterModel(),
-    val progressChapter: InterviewChapterItem = InterviewChapterItem()
+    val progressChapter: InterviewChapterItem = InterviewChapterItem(),
+    val selectedChapter: InterviewChapterItem = InterviewChapterItem()
 ) : PageState

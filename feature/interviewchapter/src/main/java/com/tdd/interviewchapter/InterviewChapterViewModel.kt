@@ -112,4 +112,14 @@ class InterviewChapterViewModel @Inject constructor(
 
     private fun findProgressChapter(currentSubId: Int, chapters: List<InterviewChapterItem>): InterviewChapterItem =
         chapters.firstOrNull { chapter -> chapter.subChapters.any { it.chapterId == currentSubId } } ?: InterviewChapterItem()
+
+    fun selectChapter(chapter: InterviewChapterItem) {
+        updateState(
+            uiState.value.copy(
+                selectedChapter = chapter
+            )
+        )
+
+        emitEventFlow(InterviewChapterEvent.ShowChapterBottomSheet)
+    }
 }

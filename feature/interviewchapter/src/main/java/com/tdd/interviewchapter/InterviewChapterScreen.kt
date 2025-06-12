@@ -2,6 +2,8 @@ package com.tdd.interviewchapter
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -16,7 +18,9 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -37,22 +41,43 @@ import com.tdd.ui.common.content.TopPageTitle
 import com.tdd.ui.common.type.ChapterType
 
 @Composable
-fun InterviewChapterScreen() {
+fun InterviewChapterScreen(
+    showChapterBottomSheet: (Int, InterviewChapterItem) -> Unit,
+) {
 
     val viewModel: InterviewChapterViewModel = hiltViewModel()
     val uiState: InterviewChapterPageState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    val interactionSource = remember { MutableInteractionSource() }
+
+    LaunchedEffect(Unit) {
+        viewModel.eventFlow.collect { event ->
+            when (event) {
+                is InterviewChapterEvent.ShowChapterBottomSheet -> {
+                    showChapterBottomSheet(
+                        uiState.chapterList.currentChapterId,
+                        uiState.selectedChapter
+                    )
+                }
+            }
+        }
+    }
+
     InterviewChapterContent(
+        interactionSource = interactionSource,
         chapterList = uiState.chapterList,
-        progressChapter = uiState.progressChapter
+        progressChapter = uiState.progressChapter,
+        onClickChapter = { viewModel.selectChapter(it) }
     )
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun InterviewChapterContent(
+    interactionSource: MutableInteractionSource = MutableInteractionSource(),
     chapterList: InterviewChapterModel = InterviewChapterModel(),
-    progressChapter: InterviewChapterItem = InterviewChapterItem()
+    progressChapter: InterviewChapterItem = InterviewChapterItem(),
+    onClickChapter: (InterviewChapterItem) -> Unit = {},
 ) {
     BoxWithConstraints(
         modifier = Modifier
@@ -81,7 +106,10 @@ fun InterviewChapterContent(
                     InterviewChapterItem(
                         chapter = chapter,
                         modifier = Modifier.width(itemWidth),
-                        isValid = (progressChapter.chapterId == chapter.chapterId)
+                        isValid = (progressChapter.chapterId == chapter.chapterId),
+                        isFinish = (chapter.chapterId < progressChapter.chapterId),
+                        onClickAction = { onClickChapter(chapter) },
+                        interactionSource = interactionSource
                     )
                 }
             }
@@ -94,9 +122,18 @@ fun InterviewChapterItem(
     chapter: InterviewChapterItem,
     modifier: Modifier,
     isValid: Boolean,
+    isFinish: Boolean,
+    onClickAction: () -> Unit,
+    interactionSource: MutableInteractionSource
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier
+            .clickable(
+                enabled = (isValid || isFinish),
+                onClick = onClickAction,
+                indication = null,
+                interactionSource = interactionSource
+            ),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(

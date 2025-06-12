@@ -3,6 +3,7 @@ package com.tdd.ui.common.bottomsheet
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -45,13 +46,16 @@ import com.tdd.domain.entity.response.interview.InterviewSubChapterItem
 fun ChapterBottomSheet(
     selectedChapter: InterviewChapterItem,
     currentId: Int,
+    onClickClose: () -> Unit
 ) {
 
     val interactionSource = remember { MutableInteractionSource() }
 
     ChapterBottomSheetContent(
         chapter = selectedChapter,
-        currentId = currentId
+        currentId = currentId,
+        onClickClose = onClickClose,
+        interactionSource = interactionSource
     )
 }
 
@@ -84,6 +88,8 @@ fun ChapterBottomSheetContent(
         )
     ),
     currentId: Int = 10,
+    onClickClose: () -> Unit = {},
+    interactionSource: MutableInteractionSource = MutableInteractionSource()
 ) {
     Box(
         modifier = Modifier
@@ -97,6 +103,11 @@ fun ChapterBottomSheetContent(
                 .align(Alignment.TopEnd)
                 .padding(top = 15.dp, end = 15.dp)
                 .size(45.dp)
+                .clickable(
+                    interactionSource = interactionSource,
+                    indication = null,
+                    onClick = onClickClose
+                )
         )
 
         Column {

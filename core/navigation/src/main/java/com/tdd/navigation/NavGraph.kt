@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.tdd.domain.entity.request.CreateUserModel
+import com.tdd.domain.entity.response.interview.InterviewChapterItem
 import com.tdd.interview.main.InterviewMainScreen
 import com.tdd.interview.start.InterviewScreen
 import com.tdd.interview.start.ready.InterviewStartScreen
@@ -114,14 +115,17 @@ fun NavGraphBuilder.interviewNavGraph(
 }
 
 fun NavGraphBuilder.interviewChapterNavGraph(
-    navController: NavController
+    navController: NavController,
+    showChapterBottomSheet: (Int, InterviewChapterItem) -> Unit
 ) {
     navigation(
         startDestination = NavRoutes.InterviewChapterScreen.route,
         route = NavRoutes.InterviewChapterGraph.route
     ) {
         composable(NavRoutes.InterviewChapterScreen.route) {
-            InterviewChapterScreen()
+            InterviewChapterScreen(
+                showChapterBottomSheet = showChapterBottomSheet
+            )
         }
     }
 }
