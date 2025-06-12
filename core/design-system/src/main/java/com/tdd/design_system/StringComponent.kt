@@ -31,3 +31,13 @@ const val MirrorInterviewType = "거울과 대화하기"
 const val AppInterviewType = "핸드폰에서 대화하기"
 const val MirrorInterviewBtnContent = "거울과 대화할래요"
 const val AppInterviewBtnContent = "핸드폰에서 대화할래요"
+
+// Chapter
+const val ChapterGrowth = "성장 과정"
+const val ChapterFamily = "가족 관계"
+const val ChapterEducation = "학창 시절"
+const val ChapterJob = "직업/진로"
+const val ChapterPersonality = "가치관/성격"
+const val ChapterExperience = "인생 경험"
+const val ChapterEmotion = "감정/취향"
+const val ChapterSociety = "사회/문화"
