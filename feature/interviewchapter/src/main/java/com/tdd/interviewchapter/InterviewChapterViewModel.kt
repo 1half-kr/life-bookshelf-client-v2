@@ -1,10 +1,9 @@
 package com.tdd.interviewchapter
 
-import com.tdd.domain.entity.response.interview.InterviewChapterModel
+import com.tdd.design_system.ChapterGrowth
 import com.tdd.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import com.tdd.design_system.R
 
 @HiltViewModel
 class InterviewChapterViewModel @Inject constructor(
@@ -13,9 +12,18 @@ class InterviewChapterViewModel @Inject constructor(
     InterviewChapterPageState()
 ) {
 
+    init {
+        initSetChapterList()
+    }
+
     private fun initSetChapterList() {
-        val chapters: List<InterviewChapterModel> = listOf(
-            InterviewChapterModel(0, R.drawable.ic_chapter_one, "성장 과정"),
+        // TODO 챕터 주제 서버통신
+        val chapters: List<String> = listOf(ChapterGrowth)
+
+        updateState(
+            uiState.value.copy(
+                chapterValidList = chapters
+            )
         )
     }
 }

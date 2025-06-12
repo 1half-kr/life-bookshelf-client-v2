@@ -13,11 +13,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,6 +29,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tdd.design_system.BackGround
 import com.tdd.design_system.Black1
 import com.tdd.design_system.BookShelfTypo
+import com.tdd.design_system.Gray5
 import com.tdd.design_system.InterviewChapterTitle
 import com.tdd.ui.common.content.TopPageTitle
 import com.tdd.ui.common.type.ChapterType
@@ -36,12 +40,16 @@ fun InterviewChapterScreen() {
     val viewModel: InterviewChapterViewModel = hiltViewModel()
     val uiState: InterviewChapterPageState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    InterviewChapterContent()
+    InterviewChapterContent(
+        chapterValidList = uiState.chapterValidList
+    )
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun InterviewChapterContent() {
+fun InterviewChapterContent(
+    chapterValidList: List<String> = emptyList(),
+) {
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
@@ -68,7 +76,8 @@ fun InterviewChapterContent() {
                 ChapterType.entries.forEach { chapter ->
                     InterviewChapterItem(
                         chapter = chapter,
-                        modifier = Modifier.width(itemWidth)
+                        modifier = Modifier.width(itemWidth),
+                        isValid = (chapterValidList.contains(chapter.chapterName))
                     )
                 }
             }
@@ -80,23 +89,26 @@ fun InterviewChapterContent() {
 fun InterviewChapterItem(
     chapter: ChapterType,
     modifier: Modifier,
+    isValid: Boolean,
 ) {
     Column(
         modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
             painter = painterResource(id = chapter.chapterImg),
             contentDescription = "chapter",
             modifier = Modifier
                 .size(width = 180.dp, height = 200.dp)
+                .clip(RoundedCornerShape(8.dp))
+                .alpha(if (isValid) 1.0f else 0.6f)
         )
 
         Spacer(modifier = Modifier.height(10.dp))
 
         Text(
             text = chapter.chapterName,
-            color = Black1,
+            color = if (isValid) Black1 else Gray5,
             style = BookShelfTypo.body30
         )
     }

@@ -23,9 +23,4 @@ enum class ChapterType(
     EXPERIENCE(5, R.drawable.ic_chapter_one, ChapterExperience),
     EMOTION(6, R.drawable.ic_chapter_one, ChapterEmotion),
     SOCIETY(7, R.drawable.ic_chapter_one, ChapterSociety);
-
-    companion object {
-//        fun getChapter(navType: BottomNavType): String =
-//            entries.firstOrNull { it == navType }?.destination ?: ""
-    }
 }
