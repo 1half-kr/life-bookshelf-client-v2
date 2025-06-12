@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.tdd.domain.entity.request.CreateUserModel
+import com.tdd.onboarding.gender.UserGenderScreen
 import com.tdd.onboarding.userage.UserAgeScreen
 import kotlinx.coroutines.flow.SharedFlow
 
@@ -20,6 +21,16 @@ fun NavGraphBuilder.onBoardingNavGraph(
         composable(NavRoutes.UserAgeScreen.route) {
             UserAgeScreen(
                 goToUserGenderPage = {
+                    setUserModel(it)
+                    navController.navigate(NavRoutes.UserGenderScreen.route)
+                }
+            )
+        }
+
+        composable(NavRoutes.UserGenderScreen.route) {
+            UserGenderScreen(
+                userModel = userModel,
+                goToEducationPage = {
                     setUserModel(it)
                 }
             )

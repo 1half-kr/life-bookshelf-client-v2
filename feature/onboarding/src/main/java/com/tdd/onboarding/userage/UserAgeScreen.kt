@@ -17,6 +17,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tdd.design_system.BackGround
 import com.tdd.design_system.Next
+import com.tdd.design_system.UserAgeSemiTitle
+import com.tdd.design_system.UserAgeTitle
 import com.tdd.domain.entity.request.CreateUserModel
 import com.tdd.onboarding.type.UserAgeType
 import com.tdd.ui.common.button.BottomRectangleBtn
@@ -25,7 +27,7 @@ import com.tdd.ui.common.item.SelectItem
 
 @Composable
 fun UserAgeScreen(
-    goToUserGenderPage: (CreateUserModel) -> Unit
+    goToUserGenderPage: (CreateUserModel) -> Unit,
 ) {
 
     val viewModel: UserAgeViewModel = hiltViewModel()
@@ -55,12 +57,15 @@ fun UserAgeContent(
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TopTitleContent()
+            TopTitleContent(
+                title = UserAgeTitle,
+                semiTitle = UserAgeSemiTitle
+            )
 
             Row(
                 modifier = Modifier
                     .padding(horizontal = 35.dp)
-                    .padding(top = 20.dp, bottom = 15.dp)
+                    .padding(top = 40.dp, bottom = 15.dp)
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {

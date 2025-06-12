@@ -13,18 +13,19 @@ import androidx.compose.ui.unit.dp
 import com.tdd.design_system.BookShelfTypo
 import com.tdd.design_system.Gray5
 import com.tdd.design_system.Main3
-import com.tdd.design_system.UserNameSemiTitle
-import com.tdd.design_system.UserNameTitle
 
 @Composable
-fun TopTitleContent() {
+fun TopTitleContent(
+    title: String,
+    semiTitle: String
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = UserNameTitle,
+            text = title,
             style = BookShelfTypo.head20,
             color = Main3,
             modifier = Modifier
@@ -32,7 +33,7 @@ fun TopTitleContent() {
         )
 
         Text(
-            text = UserNameSemiTitle,
+            text = semiTitle,
             style = BookShelfTypo.head30,
             textAlign = TextAlign.Center,
             color = Gray5,
@@ -45,5 +46,5 @@ fun TopTitleContent() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewTopTitle() {
-    TopTitleContent()
+    TopTitleContent("", "")
 }
