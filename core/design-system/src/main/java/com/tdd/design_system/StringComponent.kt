@@ -47,3 +47,11 @@ const val ChapterProgressTitle = "진행 중"
 const val ChapterSubTitle = "%s. %s"
 const val ChapterFinishCheck = "생성된 챕터 확인하기"
 const val ChapterProgressCheck = "인터뷰 채팅 진행하기"
+
+// Progress
+const val ProgressStepTitle = "출판 진행상황"
+const val ProgressBookTitle = "내가 출판한 책"
+const val ProgressBookEmptyTitle = "아직 출판한 책이 없어요."
+const val ProgressBookEmptySemiTitle = "한 줄 한 줄, 여행자님의 삶이 한 권의 책이 됩니다.\n지금, 여행자님의 이야기를 시작해보세요!"
+const val ProgressBookEmptyBtn = "자서전 생성하기"
+const val ProgressStepNumber = "0%d"
