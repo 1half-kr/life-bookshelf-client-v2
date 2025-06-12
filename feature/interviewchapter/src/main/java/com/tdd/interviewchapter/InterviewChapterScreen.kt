@@ -31,6 +31,8 @@ import com.tdd.design_system.Black1
 import com.tdd.design_system.BookShelfTypo
 import com.tdd.design_system.Gray5
 import com.tdd.design_system.InterviewChapterTitle
+import com.tdd.domain.entity.response.interview.InterviewChapterItem
+import com.tdd.domain.entity.response.interview.InterviewChapterModel
 import com.tdd.ui.common.content.TopPageTitle
 import com.tdd.ui.common.type.ChapterType
 
@@ -41,14 +43,16 @@ fun InterviewChapterScreen() {
     val uiState: InterviewChapterPageState by viewModel.uiState.collectAsStateWithLifecycle()
 
     InterviewChapterContent(
-        chapterValidList = uiState.chapterValidList
+        chapterList = uiState.chapterList,
+        progressChapter = uiState.progressChapter
     )
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun InterviewChapterContent(
-    chapterValidList: List<String> = emptyList(),
+    chapterList: InterviewChapterModel = InterviewChapterModel(),
+    progressChapter: InterviewChapterItem = InterviewChapterItem()
 ) {
     BoxWithConstraints(
         modifier = Modifier
@@ -73,11 +77,11 @@ fun InterviewChapterContent(
                 horizontalArrangement = Arrangement.spacedBy(itemSpacing),
                 verticalArrangement = Arrangement.spacedBy(25.dp, Alignment.CenterVertically)
             ) {
-                ChapterType.entries.forEach { chapter ->
+                chapterList.chapters.forEach { chapter ->
                     InterviewChapterItem(
                         chapter = chapter,
                         modifier = Modifier.width(itemWidth),
-                        isValid = (chapterValidList.contains(chapter.chapterName))
+                        isValid = (progressChapter.chapterId == chapter.chapterId)
                     )
                 }
             }
@@ -87,7 +91,7 @@ fun InterviewChapterContent(
 
 @Composable
 fun InterviewChapterItem(
-    chapter: ChapterType,
+    chapter: InterviewChapterItem,
     modifier: Modifier,
     isValid: Boolean,
 ) {
@@ -96,11 +100,11 @@ fun InterviewChapterItem(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
-            painter = painterResource(id = chapter.chapterImg),
+            painter = painterResource(id = ChapterType.getChapterImg(chapter.chapterId)),
             contentDescription = "chapter",
             modifier = Modifier
-                .size(width = 180.dp, height = 200.dp)
                 .clip(RoundedCornerShape(8.dp))
+                .size(width = 180.dp, height = 200.dp)
                 .alpha(if (isValid) 1.0f else 0.6f)
         )
 
