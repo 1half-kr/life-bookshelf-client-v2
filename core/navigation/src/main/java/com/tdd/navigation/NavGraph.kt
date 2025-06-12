@@ -139,7 +139,13 @@ fun NavGraphBuilder.progressNavGraph(
         route = NavRoutes.ProgressGraph.route
     ) {
         composable(NavRoutes.ProgressScreen.route) {
-            ProgressScreen()
+            ProgressScreen(
+                goToInterviewPage = {
+                    navController.navigate(NavRoutes.InterviewMainScreen.route) {
+                        popUpTo(0)
+                    }
+                }
+            )
         }
     }
 }

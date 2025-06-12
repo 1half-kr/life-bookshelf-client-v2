@@ -52,19 +52,23 @@ import com.tdd.ui.common.button.BottomRectangleBtn
 import com.tdd.ui.common.content.TopPageTitle
 
 @Composable
-fun ProgressScreen() {
+fun ProgressScreen(
+    goToInterviewPage: () -> Unit
+) {
 
     val viewModel: ProgressViewModel = hiltViewModel()
     val uiState: ProgressPageState by viewModel.uiState.collectAsStateWithLifecycle()
 
     ProgressContent(
-        steps = uiState.progressStep
+        steps = uiState.progressStep,
+        onClickEmptyBookBtn = { goToInterviewPage() }
     )
 }
 
 @Composable
 fun ProgressContent(
     steps: List<ProgressStepItem> = emptyList(),
+    onClickEmptyBookBtn: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -80,7 +84,8 @@ fun ProgressContent(
         )
 
         ProgressBookList(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            onClickEmptyBookBtn = onClickEmptyBookBtn
         )
     }
 }
@@ -175,6 +180,7 @@ fun ProgressStepItemContent(
 @Composable
 fun ProgressBookList(
     modifier: Modifier,
+    onClickEmptyBookBtn: () -> Unit
 ) {
     Text(
         text = ProgressBookTitle,
@@ -218,7 +224,7 @@ fun ProgressBookList(
         BottomRectangleBtn(
             btnTextContent = ProgressBookEmptyBtn,
             isBtnActivated = true,
-            onClickAction = {}
+            onClickAction = onClickEmptyBookBtn
         )
     }
 }
