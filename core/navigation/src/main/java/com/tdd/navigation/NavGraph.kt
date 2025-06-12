@@ -76,13 +76,19 @@ fun NavGraphBuilder.onBoardingNavGraph(
 
 fun NavGraphBuilder.interviewNavGraph(
     navController: NavController,
+    showDialog: () -> Unit
 ) {
     navigation(
         startDestination = NavRoutes.StartInterViewScreen.route,
         route = NavRoutes.InterViewGraph.route
     ) {
         composable(NavRoutes.StartInterViewScreen.route) {
-            InterviewStartScreen()
+            InterviewStartScreen(
+                showInterviewDialog = showDialog,
+                goHomePage = {
+                    //
+                }
+            )
         }
     }
 }
