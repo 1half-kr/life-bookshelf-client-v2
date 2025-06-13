@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,24 +49,37 @@ import com.tdd.design_system.ProgressTitle
 import com.tdd.design_system.R
 import com.tdd.design_system.White2
 import com.tdd.design_system.White4
+import com.tdd.domain.entity.response.CreatedBookModel
 import com.tdd.domain.entity.response.progress.ProgressBookInfoModel
 import com.tdd.domain.entity.response.progress.ProgressStepItem
 import com.tdd.ui.common.button.BottomRectangleBtn
 import com.tdd.ui.common.content.TopPageTitle
+import kotlinx.coroutines.flow.SharedFlow
 
 @Composable
 fun ProgressScreen(
     goToInterviewPage: () -> Unit,
-    showCreateBookBottomSheet: (ProgressBookInfoModel) -> Unit
+    showCreateBookBottomSheet: (ProgressBookInfoModel) -> Unit,
+    isBookCreatedEnabled: SharedFlow<Boolean>,
 ) {
 
     val viewModel: ProgressViewModel = hiltViewModel()
     val uiState: ProgressPageState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    LaunchedEffect(isBookCreatedEnabled) {
+        isBookCreatedEnabled.collect { enabled ->
+            if (enabled) {
+                viewModel.createBook()
+            }
+        }
+    }
+
     ProgressContent(
         steps = uiState.progressStep,
         onClickEmptyBookBtn = { goToInterviewPage() },
-        onClickCreateBook = { showCreateBookBottomSheet(viewModel.setCreateBookInfo()) }
+        onClickCreateBook = { showCreateBookBottomSheet(viewModel.setCreateBookInfo()) },
+        isCreatedBook = uiState.isCreatedBook,
+        createdBook = uiState.createdBook
     )
 }
 
@@ -73,7 +87,9 @@ fun ProgressScreen(
 fun ProgressContent(
     steps: List<ProgressStepItem> = emptyList(),
     onClickEmptyBookBtn: () -> Unit = {},
-    onClickCreateBook: () -> Unit = {}
+    onClickCreateBook: () -> Unit = {},
+    isCreatedBook: Boolean = false,
+    createdBook: CreatedBookModel = CreatedBookModel(),
 ) {
     Column(
         modifier = Modifier
@@ -91,7 +107,9 @@ fun ProgressContent(
 
         ProgressBookList(
             modifier = Modifier.weight(1f),
-            onClickEmptyBookBtn = onClickEmptyBookBtn
+            onClickEmptyBookBtn = onClickEmptyBookBtn,
+            isCreatedBook = isCreatedBook,
+            createdBook = createdBook
         )
     }
 }
@@ -99,7 +117,7 @@ fun ProgressContent(
 @Composable
 fun ProgressStepList(
     steps: List<ProgressStepItem>,
-    onClickCreateBook: () -> Unit
+    onClickCreateBook: () -> Unit,
 ) {
     Text(
         text = ProgressStepTitle,
@@ -129,7 +147,7 @@ fun ProgressStepList(
 fun ProgressStepItemContent(
     step: ProgressStepItem,
     onClickAction: () -> Unit,
-    isClickEnabled: Boolean = false
+    isClickEnabled: Boolean = false,
 ) {
     Column(
         modifier = Modifier
@@ -195,7 +213,9 @@ fun ProgressStepItemContent(
 @Composable
 fun ProgressBookList(
     modifier: Modifier,
-    onClickEmptyBookBtn: () -> Unit
+    onClickEmptyBookBtn: () -> Unit,
+    isCreatedBook: Boolean,
+    createdBook: CreatedBookModel,
 ) {
     Text(
         text = ProgressBookTitle,
@@ -214,34 +234,113 @@ fun ProgressBookList(
             .border(1.dp, Gray3, RoundedCornerShape(8.dp)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier.weight(1f),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = ProgressBookEmptyTitle,
-                color = Black1,
-                style = BookShelfTypo.head30,
-                textAlign = TextAlign.Center,
+//        Column(
+//            modifier = Modifier.weight(1f),
+//            horizontalAlignment = Alignment.CenterHorizontally,
+//            verticalArrangement = Arrangement.Center
+//        ) {
+//            Text(
+//                text = ProgressBookEmptyTitle,
+//                color = Black1,
+//                style = BookShelfTypo.head30,
+//                textAlign = TextAlign.Center,
+//            )
+//
+//            Spacer(modifier = Modifier.height(20.dp))
+//
+//            Text(
+//                text = ProgressBookEmptySemiTitle,
+//                color = Black1,
+//                style = BookShelfTypo.body30,
+//                textAlign = TextAlign.Center,
+//            )
+//        }
+//
+//        BottomRectangleBtn(
+//            btnTextContent = ProgressBookEmptyBtn,
+//            isBtnActivated = true,
+//            onClickAction = onClickEmptyBookBtn
+//        )
+
+        if (isCreatedBook) {
+            ProgressCreatedBook(
+                createdBook = createdBook
             )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Text(
-                text = ProgressBookEmptySemiTitle,
-                color = Black1,
-                style = BookShelfTypo.body30,
-                textAlign = TextAlign.Center,
+        } else {
+            ProgressBookEmptyContent(
+                modifier = Modifier
+                    .weight(1f),
+                onClickEmptyBookBtn = onClickEmptyBookBtn
             )
         }
+    }
+}
 
-        BottomRectangleBtn(
-            btnTextContent = ProgressBookEmptyBtn,
-            isBtnActivated = true,
-            onClickAction = onClickEmptyBookBtn
+@Composable
+fun ProgressCreatedBook(
+    createdBook: CreatedBookModel,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(start = 50.dp),
+//        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Image(
+                painter = painterResource(id = createdBook.bookImg),
+                contentDescription = "book cover",
+                modifier = Modifier
+                    .size(width = 150.dp, height = 200.dp)
+            )
+
+            Text(
+                text = "인생 기록",
+                color = Black1,
+                style = BookShelfTypo.body50,
+                modifier = Modifier
+                    .padding(top = 10.dp)
+//                    .align(Alignment.CenterHorizontally)
+            )
+        }
+    }
+}
+
+@Composable
+fun ProgressBookEmptyContent(
+    modifier: Modifier,
+    onClickEmptyBookBtn: () -> Unit,
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = ProgressBookEmptyTitle,
+            color = Black1,
+            style = BookShelfTypo.head30,
+            textAlign = TextAlign.Center,
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Text(
+            text = ProgressBookEmptySemiTitle,
+            color = Black1,
+            style = BookShelfTypo.body30,
+            textAlign = TextAlign.Center,
         )
     }
+
+    BottomRectangleBtn(
+        btnTextContent = ProgressBookEmptyBtn,
+        isBtnActivated = true,
+        onClickAction = onClickEmptyBookBtn
+    )
 }
 
 @Preview(showBackground = true, showSystemUi = true)

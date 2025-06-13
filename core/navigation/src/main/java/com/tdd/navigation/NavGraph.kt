@@ -134,7 +134,8 @@ fun NavGraphBuilder.interviewChapterNavGraph(
 
 fun NavGraphBuilder.progressNavGraph(
     navController: NavController,
-    showCreateBookBottomSheet: (ProgressBookInfoModel) -> Unit
+    showCreateBookBottomSheet: (ProgressBookInfoModel) -> Unit,
+    isBookCreatedEnabled: SharedFlow<Boolean>
 ) {
     navigation(
         startDestination = NavRoutes.ProgressScreen.route,
@@ -147,7 +148,8 @@ fun NavGraphBuilder.progressNavGraph(
                         popUpTo(0)
                     }
                 },
-                showCreateBookBottomSheet = showCreateBookBottomSheet
+                showCreateBookBottomSheet = showCreateBookBottomSheet,
+                isBookCreatedEnabled = isBookCreatedEnabled
             )
         }
     }

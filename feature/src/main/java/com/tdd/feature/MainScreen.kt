@@ -140,7 +140,14 @@ fun MainScreen() {
                                         sheetState.hide()
                                     }
                                 },
-                                bookInfo = uiState.createBookInfo
+                                bookInfo = uiState.createBookInfo,
+                                onClickCreateBtn = {
+                                    scope.launch {
+                                        sheetState.hide()
+                                        viewModel.isBookCreateEnabled.emit(true)
+                                    }
+                                    navController.navigate(NavRoutes.ProgressScreen.route)
+                                }
                             )
                         }
 
@@ -197,7 +204,8 @@ fun MainScreen() {
                     )
                     progressNavGraph(
                         navController = navController,
-                        showCreateBookBottomSheet = showCreateBookBottomSheet
+                        showCreateBookBottomSheet = showCreateBookBottomSheet,
+                        isBookCreatedEnabled = viewModel.isBookCreateEnabled
                     )
                 }
             }

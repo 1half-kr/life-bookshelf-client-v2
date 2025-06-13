@@ -4,15 +4,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -23,18 +22,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tdd.design_system.BackGround
-import com.tdd.design_system.Black1
-import com.tdd.design_system.BookInfoPages
-import com.tdd.design_system.BookInfoPrice
 import com.tdd.design_system.BookShelfTypo
 import com.tdd.design_system.BottomSheet
 import com.tdd.design_system.Main2
 import com.tdd.design_system.Main3
 import com.tdd.design_system.ProgressBottomSheetBtn
-import com.tdd.design_system.ProgressBottomSheetNotice
 import com.tdd.design_system.ProgressBottomSheetTitle
 import com.tdd.design_system.R
-import com.tdd.design_system.White4
 import com.tdd.domain.entity.response.progress.ProgressBookInfoModel
 import com.tdd.ui.common.button.BottomRectangleBtn
 
@@ -42,6 +36,7 @@ import com.tdd.ui.common.button.BottomRectangleBtn
 fun CreateBookInfoBottomSheet(
     onClickClose: () -> Unit,
     bookInfo: ProgressBookInfoModel,
+    onClickCreateBtn: () -> Unit
 ) {
 
     val interactionSource = remember { MutableInteractionSource() }
@@ -49,7 +44,8 @@ fun CreateBookInfoBottomSheet(
     CreateBookInfoContent(
         interactionSource = interactionSource,
         onClickClose = onClickClose,
-        bookInfo = bookInfo
+        bookInfo = bookInfo,
+        onClickCreateBtn = onClickCreateBtn
     )
 }
 
@@ -58,6 +54,7 @@ fun CreateBookInfoContent(
     interactionSource: MutableInteractionSource = MutableInteractionSource(),
     onClickClose: () -> Unit = {},
     bookInfo: ProgressBookInfoModel = ProgressBookInfoModel(),
+    onClickCreateBtn: () -> Unit = {}
 ) {
     Box(
         modifier = Modifier
@@ -90,7 +87,7 @@ fun CreateBookInfoContent(
             BottomRectangleBtn(
                 btnTextContent = ProgressBottomSheetBtn,
                 isBtnActivated = true,
-                onClickAction = {}
+                onClickAction = onClickCreateBtn
             )
         }
 
@@ -113,93 +110,107 @@ fun CreateBookInfoContent(
 @Composable
 fun CreateBookInfoBox(
     bookInfo: ProgressBookInfoModel,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     Box(
+//        modifier = modifier
+//            .padding(vertical = 20.dp)
+//            .fillMaxWidth()
         modifier = modifier
-            .padding(vertical = 20.dp)
+            .wrapContentSize(),
+        contentAlignment = Alignment.Center
     ) {
-        Box(
+
+        Image(
+            painter = painterResource(id = R.drawable.ic_ticket_example),
+            contentDescription = "background example",
             modifier = Modifier
-                .background(White4)
-//                .size(width = 230.dp, height = 270.dp)
-                .width(300.dp)
+                .fillMaxSize()
         )
 
-        Column(
-            modifier = Modifier
-//                .size(width = 230.dp, height = 270.dp)
-                .width(300.dp)
-        ) {
-            Text(
-                text = "자서전 제목",
-                color = Main3,
-                style = BookShelfTypo.body50,
-                modifier = Modifier
-                    .padding(top = 10.dp, start = 15.dp)
-            )
-
-            Text(
-                text = bookInfo.bookTitle,
-                color = Black1,
-                style = BookShelfTypo.caption40,
-                modifier = Modifier
-                    .padding(top = 6.dp, start = 15.dp)
-            )
-
-            Text(
-                text = "출판 예상 시간",
-                color = Main3,
-                style = BookShelfTypo.body50,
-                modifier = Modifier
-                    .padding(top = 10.dp, start = 15.dp)
-            )
-
-            Row {
-
-                Image(
-                    painter = painterResource(id = R.drawable.ic_airplane),
-                    contentDescription = "airplane",
-                    modifier = Modifier
-                        .size(30.dp)
-                )
-            }
-
-            Row(
-                modifier = Modifier
-                    .padding(vertical = 30.dp)
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally),
-                horizontalArrangement = Arrangement.spacedBy(7.dp, Alignment.CenterHorizontally)
-            ) {
-                CreateBookInfoDetailBox(
-                    title = "페이지 수",
-                    content = String.format(BookInfoPages, bookInfo.page),
-                    detailIcon = R.drawable.ic_book_pages
-                )
-
-                CreateBookInfoDetailBox(
-                    title = "예상 가격",
-                    content = String.format(BookInfoPrice, bookInfo.price),
-                    detailIcon = R.drawable.ic_book_price
-                )
-            }
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            Text(
-                text = ProgressBottomSheetNotice,
-                color = Black1,
-                style = BookShelfTypo.caption40,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .padding(bottom = 15.dp)
-            )
-        }
 //        Image(
 //            painter = painterResource(id = R.drawable.ic_ticket),
-//            contentDescription = "background"
+//            contentDescription = "background",
+//            modifier = Modifier
+//                .fillMaxSize()
+////                .width(450.dp)
 //        )
+//
+//        Column(
+//            modifier = Modifier
+////                .size(width = 230.dp, height = 270.dp)
+//                .width(320.dp)
+////                .fillMaxSize()
+//            ,
+//            horizontalAlignment = Alignment.Start
+//        ) {
+//            Text(
+//                text = "자서전 제목",
+//                color = Main3,
+//                style = BookShelfTypo.body50,
+//                modifier = Modifier
+//                    .padding(top = 30.dp, start = 30.dp)
+//            )
+//
+//            Text(
+//                text = bookInfo.bookTitle,
+//                color = Black1,
+//                style = BookShelfTypo.caption40,
+//                modifier = Modifier
+//                    .padding(top = 6.dp, start = 15.dp)
+//            )
+//
+//            Text(
+//                text = "출판 예상 시간",
+//                color = Main3,
+//                style = BookShelfTypo.body50,
+//                modifier = Modifier
+//                    .padding(top = 30.dp, start = 15.dp)
+//            )
+//
+//            Row(
+//                modifier = Modifier
+//                    .padding(start = 15.dp, top = 6.dp)
+//            ) {
+//                Image(
+//                    painter = painterResource(id = R.drawable.ic_airplane),
+//                    contentDescription = "airplane",
+//                    modifier = Modifier.size(60.dp)
+//                )
+//            }
+//
+//            Row(
+//                modifier = Modifier
+//                    .padding(vertical = 30.dp, horizontal = 15.dp)
+//                    .fillMaxWidth()
+//                    .align(Alignment.CenterHorizontally),
+//                horizontalArrangement = Arrangement.spacedBy(7.dp, Alignment.CenterHorizontally)
+//            ) {
+//                CreateBookInfoDetailBox(
+//                    title = "페이지 수",
+//                    content = String.format(BookInfoPages, bookInfo.page),
+//                    detailIcon = R.drawable.ic_book_pages
+//                )
+//
+//                CreateBookInfoDetailBox(
+//                    title = "예상 가격",
+//                    content = String.format(BookInfoPrice, bookInfo.price),
+//                    detailIcon = R.drawable.ic_book_price
+//                )
+//            }
+//
+////            Spacer(modifier = Modifier.weight(1f))
+//
+//            Text(
+//                text = ProgressBottomSheetNotice,
+//                color = Black1,
+//                style = BookShelfTypo.caption40,
+//                textAlign = TextAlign.Center,
+//                modifier = Modifier
+//                    .align(Alignment.CenterHorizontally)
+//                    .padding(bottom = 15.dp)
+//            )
+//        }
     }
 }
 
@@ -207,11 +218,12 @@ fun CreateBookInfoBox(
 fun CreateBookInfoDetailBox(
     title: String,
     content: String,
-    detailIcon: Int
+    detailIcon: Int,
 ) {
     Column(
         modifier = Modifier
             .background(BottomSheet)
+            .fillMaxWidth()
     ) {
         Row(
             modifier = Modifier

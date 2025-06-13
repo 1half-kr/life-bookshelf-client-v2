@@ -20,6 +20,7 @@ class MainViewModel @Inject constructor(
 ) {
 
     val userModel = MutableSharedFlow<CreateUserModel>(replay = 1)
+    val isBookCreateEnabled = MutableSharedFlow<Boolean>(replay = 1)
 
     fun setBottomNavType(route: String?) {
         val type = when (route) {
