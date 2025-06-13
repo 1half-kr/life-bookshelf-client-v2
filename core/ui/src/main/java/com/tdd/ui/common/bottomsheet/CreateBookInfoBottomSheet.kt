@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -56,14 +57,7 @@ fun CreateBookInfoBottomSheet(
 fun CreateBookInfoContent(
     interactionSource: MutableInteractionSource = MutableInteractionSource(),
     onClickClose: () -> Unit = {},
-    bookInfo: ProgressBookInfoModel = ProgressBookInfoModel(
-        "인생기록",
-        listOf("인생기록", "나의 인생", "발자취", "걸어온 길"),
-        "2025.06.13",
-        "2025.06.30",
-        300,
-        "50,000"
-    ),
+    bookInfo: ProgressBookInfoModel = ProgressBookInfoModel(),
 ) {
     Box(
         modifier = Modifier
@@ -74,6 +68,7 @@ fun CreateBookInfoContent(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .weight(1f)
                     .padding(top = 80.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -87,7 +82,8 @@ fun CreateBookInfoContent(
                 )
 
                 CreateBookInfoBox(
-                    bookInfo = bookInfo
+                    bookInfo = bookInfo,
+                    modifier = Modifier.weight(1f)
                 )
             }
 
@@ -117,20 +113,23 @@ fun CreateBookInfoContent(
 @Composable
 fun CreateBookInfoBox(
     bookInfo: ProgressBookInfoModel,
+    modifier: Modifier
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .padding(vertical = 20.dp)
     ) {
         Box(
             modifier = Modifier
                 .background(White4)
-                .size(width = 230.dp, height = 270.dp)
+//                .size(width = 230.dp, height = 270.dp)
+                .width(300.dp)
         )
 
         Column(
             modifier = Modifier
-                .size(width = 230.dp, height = 270.dp)
+//                .size(width = 230.dp, height = 270.dp)
+                .width(300.dp)
         ) {
             Text(
                 text = "자서전 제목",
@@ -141,7 +140,7 @@ fun CreateBookInfoBox(
             )
 
             Text(
-                text = bookInfo.bookTitles[0],
+                text = bookInfo.bookTitle,
                 color = Black1,
                 style = BookShelfTypo.caption40,
                 modifier = Modifier

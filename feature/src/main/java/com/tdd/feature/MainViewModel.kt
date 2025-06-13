@@ -2,6 +2,7 @@ package com.tdd.feature
 
 import com.tdd.domain.entity.request.CreateUserModel
 import com.tdd.domain.entity.response.interview.InterviewChapterItem
+import com.tdd.domain.entity.response.progress.ProgressBookInfoModel
 import com.tdd.navigation.NavRoutes
 import com.tdd.ui.base.BaseViewModel
 import com.tdd.ui.common.type.BottomSheetType
@@ -66,6 +67,15 @@ class MainViewModel @Inject constructor(
                 currentChapterId = id,
                 selectedChapter = chapter,
                 bottomSheetType = BottomSheetType.CHAPTER
+            )
+        )
+    }
+
+    fun setCreateBookInfoBottomSheet(bookInfo: ProgressBookInfoModel) {
+        updateState(
+            uiState.value.copy(
+                createBookInfo = bookInfo,
+                bottomSheetType = BottomSheetType.CREATEBOOK
             )
         )
     }

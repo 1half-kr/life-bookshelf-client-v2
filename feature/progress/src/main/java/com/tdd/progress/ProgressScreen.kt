@@ -3,6 +3,7 @@ package com.tdd.progress
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -47,13 +48,15 @@ import com.tdd.design_system.ProgressTitle
 import com.tdd.design_system.R
 import com.tdd.design_system.White2
 import com.tdd.design_system.White4
+import com.tdd.domain.entity.response.progress.ProgressBookInfoModel
 import com.tdd.domain.entity.response.progress.ProgressStepItem
 import com.tdd.ui.common.button.BottomRectangleBtn
 import com.tdd.ui.common.content.TopPageTitle
 
 @Composable
 fun ProgressScreen(
-    goToInterviewPage: () -> Unit
+    goToInterviewPage: () -> Unit,
+    showCreateBookBottomSheet: (ProgressBookInfoModel) -> Unit
 ) {
 
     val viewModel: ProgressViewModel = hiltViewModel()
@@ -61,14 +64,16 @@ fun ProgressScreen(
 
     ProgressContent(
         steps = uiState.progressStep,
-        onClickEmptyBookBtn = { goToInterviewPage() }
+        onClickEmptyBookBtn = { goToInterviewPage() },
+        onClickCreateBook = { showCreateBookBottomSheet(viewModel.setCreateBookInfo()) }
     )
 }
 
 @Composable
 fun ProgressContent(
     steps: List<ProgressStepItem> = emptyList(),
-    onClickEmptyBookBtn: () -> Unit = {}
+    onClickEmptyBookBtn: () -> Unit = {},
+    onClickCreateBook: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -80,7 +85,8 @@ fun ProgressContent(
         )
 
         ProgressStepList(
-            steps = steps
+            steps = steps,
+            onClickCreateBook = onClickCreateBook
         )
 
         ProgressBookList(
@@ -93,6 +99,7 @@ fun ProgressContent(
 @Composable
 fun ProgressStepList(
     steps: List<ProgressStepItem>,
+    onClickCreateBook: () -> Unit
 ) {
     Text(
         text = ProgressStepTitle,
@@ -110,7 +117,9 @@ fun ProgressStepList(
     ) {
         items(steps) { step ->
             ProgressStepItemContent(
-                step = step
+                step = step,
+                onClickAction = onClickCreateBook,
+                isClickEnabled = (step.title == "출판 신청" && step.isProgress)
             )
         }
     }
@@ -119,13 +128,19 @@ fun ProgressStepList(
 @Composable
 fun ProgressStepItemContent(
     step: ProgressStepItem,
+    onClickAction: () -> Unit,
+    isClickEnabled: Boolean = false
 ) {
     Column(
         modifier = Modifier
             .width(250.dp)
             .clip(RoundedCornerShape(8.dp))
             .background(if (step.isProgress) Main3 else White2)
-            .border(1.dp, Gray4, RoundedCornerShape(8.dp)),
+            .border(1.dp, Gray4, RoundedCornerShape(8.dp))
+            .clickable(
+                enabled = isClickEnabled,
+                onClick = onClickAction
+            ),
     ) {
         Row(
             modifier = Modifier

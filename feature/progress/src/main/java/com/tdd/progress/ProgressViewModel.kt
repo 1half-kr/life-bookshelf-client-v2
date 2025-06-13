@@ -1,5 +1,6 @@
 package com.tdd.progress
 
+import com.tdd.domain.entity.response.progress.ProgressBookInfoModel
 import com.tdd.domain.entity.response.progress.ProgressStepItem
 import com.tdd.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +17,7 @@ class ProgressViewModel @Inject constructor(
     }
 
     private fun initSetProgressStep() {
+        // TODO 서버통신
         val progressStep: List<ProgressStepItem> = listOf(
             ProgressStepItem(1, "인터뷰 진행", "자서전 생성을 위해\n인터뷰를 진행해요", true, false),
             ProgressStepItem(2, "출판 신청", "챕터 생성이 끝났어요.\n출판 신청을 해보세요!", false, true),
@@ -30,4 +32,7 @@ class ProgressViewModel @Inject constructor(
             )
         )
     }
+
+    // TODO 서버통신
+    fun setCreateBookInfo(): ProgressBookInfoModel = ProgressBookInfoModel("인생 기록", listOf(), "2025.06.06", "2025.07.20", 300, "50,000")
 }

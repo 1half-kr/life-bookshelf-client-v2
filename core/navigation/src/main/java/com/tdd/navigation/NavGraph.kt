@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.tdd.domain.entity.request.CreateUserModel
 import com.tdd.domain.entity.response.interview.InterviewChapterItem
+import com.tdd.domain.entity.response.progress.ProgressBookInfoModel
 import com.tdd.interview.main.InterviewMainScreen
 import com.tdd.interview.start.InterviewScreen
 import com.tdd.interview.start.ready.InterviewStartScreen
@@ -132,7 +133,8 @@ fun NavGraphBuilder.interviewChapterNavGraph(
 }
 
 fun NavGraphBuilder.progressNavGraph(
-    navController: NavController
+    navController: NavController,
+    showCreateBookBottomSheet: (ProgressBookInfoModel) -> Unit
 ) {
     navigation(
         startDestination = NavRoutes.ProgressScreen.route,
@@ -144,7 +146,8 @@ fun NavGraphBuilder.progressNavGraph(
                     navController.navigate(NavRoutes.InterviewMainScreen.route) {
                         popUpTo(0)
                     }
-                }
+                },
+                showCreateBookBottomSheet = showCreateBookBottomSheet
             )
         }
     }
