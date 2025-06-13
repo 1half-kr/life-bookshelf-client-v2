@@ -23,4 +23,5 @@ sealed class NavRoutes(val route: String) {
     // Progress Graph
     data object ProgressGraph: NavRoutes("progress_graph")
     data object ProgressScreen: NavRoutes("progress")
+    data object BookResultScreen: NavRoutes("book_result")
 }

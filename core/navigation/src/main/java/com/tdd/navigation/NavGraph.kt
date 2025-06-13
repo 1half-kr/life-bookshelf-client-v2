@@ -18,6 +18,7 @@ import com.tdd.onboarding.gender.UserGenderScreen
 import com.tdd.onboarding.marriage.MarriageScreen
 import com.tdd.onboarding.userage.UserAgeScreen
 import com.tdd.progress.ProgressScreen
+import com.tdd.progress.resultbook.BookResultScreen
 import kotlinx.coroutines.flow.SharedFlow
 
 fun NavGraphBuilder.onBoardingNavGraph(
@@ -149,7 +150,20 @@ fun NavGraphBuilder.progressNavGraph(
                     }
                 },
                 showCreateBookBottomSheet = showCreateBookBottomSheet,
-                isBookCreatedEnabled = isBookCreatedEnabled
+                isBookCreatedEnabled = isBookCreatedEnabled,
+                goToBookResultPage = {
+                    navController.navigate(NavRoutes.BookResultScreen.route)
+                }
+            )
+        }
+
+        composable(NavRoutes.BookResultScreen.route) {
+            BookResultScreen(
+                goBack = {
+                    navController.navigate(NavRoutes.ProgressScreen.route) {
+                        popUpTo(0)
+                    }
+                }
             )
         }
     }

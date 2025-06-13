@@ -61,6 +61,7 @@ fun ProgressScreen(
     goToInterviewPage: () -> Unit,
     showCreateBookBottomSheet: (ProgressBookInfoModel) -> Unit,
     isBookCreatedEnabled: SharedFlow<Boolean>,
+    goToBookResultPage: () -> Unit
 ) {
 
     val viewModel: ProgressViewModel = hiltViewModel()
@@ -79,7 +80,8 @@ fun ProgressScreen(
         onClickEmptyBookBtn = { goToInterviewPage() },
         onClickCreateBook = { showCreateBookBottomSheet(viewModel.setCreateBookInfo()) },
         isCreatedBook = uiState.isCreatedBook,
-        createdBook = uiState.createdBook
+        createdBook = uiState.createdBook,
+        onClickBook = { goToBookResultPage() }
     )
 }
 
@@ -90,6 +92,7 @@ fun ProgressContent(
     onClickCreateBook: () -> Unit = {},
     isCreatedBook: Boolean = false,
     createdBook: CreatedBookModel = CreatedBookModel(),
+    onClickBook: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -109,7 +112,8 @@ fun ProgressContent(
             modifier = Modifier.weight(1f),
             onClickEmptyBookBtn = onClickEmptyBookBtn,
             isCreatedBook = isCreatedBook,
-            createdBook = createdBook
+            createdBook = createdBook,
+            onClickAction = onClickBook
         )
     }
 }
@@ -216,6 +220,7 @@ fun ProgressBookList(
     onClickEmptyBookBtn: () -> Unit,
     isCreatedBook: Boolean,
     createdBook: CreatedBookModel,
+    onClickAction: () -> Unit
 ) {
     Text(
         text = ProgressBookTitle,
@@ -264,7 +269,8 @@ fun ProgressBookList(
 
         if (isCreatedBook) {
             ProgressCreatedBook(
-                createdBook = createdBook
+                createdBook = createdBook,
+                onClickAction = onClickAction
             )
         } else {
             ProgressBookEmptyContent(
@@ -279,6 +285,7 @@ fun ProgressBookList(
 @Composable
 fun ProgressCreatedBook(
     createdBook: CreatedBookModel,
+    onClickAction: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -288,6 +295,10 @@ fun ProgressCreatedBook(
         verticalArrangement = Arrangement.Center
     ) {
         Column(
+            modifier = Modifier
+                .clickable(
+                    onClick = onClickAction
+                ),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
