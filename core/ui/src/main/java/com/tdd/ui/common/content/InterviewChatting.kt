@@ -1,5 +1,6 @@
 package com.tdd.ui.common.content
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -8,14 +9,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tdd.design_system.BackGround
@@ -26,6 +30,7 @@ import com.tdd.design_system.Main3
 import com.tdd.design_system.White2
 import com.tdd.domain.entity.enum.ChattingType
 import com.tdd.domain.entity.response.interview.InterviewChattingModel.Chatting
+import com.tdd.design_system.R
 
 @Composable
 fun InterviewChatting(
@@ -43,11 +48,18 @@ fun InterviewChattingContent(
     chattingList: List<Chatting> = emptyList(),
     modifier: Modifier = Modifier,
 ) {
-    Column(
+    Box(
         modifier = modifier
             .fillMaxSize()
             .background(BackGround)
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.ic_interview_background),
+            contentDescription = "background",
+            modifier = Modifier
+                .size(500.dp)
+                .align(Alignment.Center)
+        )
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()

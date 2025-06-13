@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -142,7 +143,8 @@ fun InterviewChapterItem(
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
                 .size(width = 180.dp, height = 200.dp)
-                .alpha(if (isValid) 1.0f else 0.6f)
+                .alpha(if (isValid) 1.0f else 0.6f),
+            contentScale = ContentScale.Crop
         )
 
         Spacer(modifier = Modifier.height(10.dp))

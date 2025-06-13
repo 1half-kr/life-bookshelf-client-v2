@@ -16,13 +16,13 @@ enum class ChapterType(
     val chapterName: String
 ) {
     GROWTH(1, R.drawable.ic_chapter_one, ChapterGrowth),
-    FAMILY(2, R.drawable.ic_chapter_one, ChapterFamily),
-    EDUCATION(3, R.drawable.ic_chapter_one, ChapterEducation),
-    JOB(4, R.drawable.ic_chapter_one, ChapterJob),
-    CHARACTER(5, R.drawable.ic_chapter_one, ChapterPersonality),
-    EXPERIENCE(6, R.drawable.ic_chapter_one, ChapterExperience),
-    EMOTION(7, R.drawable.ic_chapter_one, ChapterEmotion),
-    SOCIETY(8, R.drawable.ic_chapter_one, ChapterSociety);
+    FAMILY(2, R.drawable.ic_chapter_two, ChapterFamily),
+    EDUCATION(3, R.drawable.ic_chapter_three, ChapterEducation),
+    JOB(4, R.drawable.ic_chapter_four, ChapterJob),
+    CHARACTER(5, R.drawable.ic_chapter_five, ChapterPersonality),
+    EXPERIENCE(6, R.drawable.ic_chapter_six, ChapterExperience),
+    EMOTION(7, R.drawable.ic_chapter_seven, ChapterEmotion),
+    SOCIETY(8, R.drawable.ic_chapter_eight, ChapterSociety);
 
     companion object {
         fun getChapterImg(chapterId: Int) =

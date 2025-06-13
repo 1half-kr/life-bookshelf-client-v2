@@ -5,4 +5,5 @@ data class InterviewSubChapterItem (
     val chapterNumber: String = "",
     val chapterName: String = "",
     val chapterDescription: String = "",
+    val chapterImg: Int = 0
 )
