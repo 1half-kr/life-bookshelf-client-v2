@@ -28,3 +28,6 @@ val Red1 = Color(0xFFF76D6D)
 
 // Background
 val BackGround = Color(0xFFF7F6FB)
+
+// BottomSheet
+val BottomSheet = Color(0x106ABCFE)
