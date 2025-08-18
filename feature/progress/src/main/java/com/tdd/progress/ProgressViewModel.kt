@@ -35,10 +35,10 @@ class ProgressViewModel @Inject constructor(
     }
 
     // TODO 서버통신
-    fun setCreateBookInfo(): ProgressBookInfoModel = ProgressBookInfoModel("인생 기록", listOf(), "2025.06.06", "2025.07.20", 300, "50,000")
+    fun setCreateBookInfo(): ProgressBookInfoModel = ProgressBookInfoModel("혼란을 건너 성장으로", listOf(), "2025.08.18", "2025.08.30", 300, "50,000")
 
     fun createBook() {
-        val createdBook = CreatedBookModel(com.tdd.design_system.R.drawable.ic_book_example, "인생 기록", "")
+        val createdBook = CreatedBookModel(com.tdd.design_system.R.drawable.ic_book_example2, "혼란을 건너 성장으로", "")
         val progressStep: List<ProgressStepItem> = listOf(
             ProgressStepItem(1, "인터뷰 진행", "자서전 생성을 위해\n인터뷰를 진행해요", true, false),
             ProgressStepItem(2, "출판 신청", "챕터 생성이 끝났어요.\n출판 신청을 해보세요!", true, false),

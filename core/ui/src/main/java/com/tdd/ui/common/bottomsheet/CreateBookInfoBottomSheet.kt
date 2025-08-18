@@ -122,7 +122,7 @@ fun CreateBookInfoBox(
     ) {
 
         Image(
-            painter = painterResource(id = R.drawable.ic_ticket_example),
+            painter = painterResource(id = R.drawable.ic_ticket_example2),
             contentDescription = "background example",
             modifier = Modifier
                 .fillMaxSize()

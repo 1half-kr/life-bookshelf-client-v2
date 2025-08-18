@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -67,6 +69,8 @@ fun ProgressScreen(
     val viewModel: ProgressViewModel = hiltViewModel()
     val uiState: ProgressPageState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    val interactionSource = remember { MutableInteractionSource() }
+
     LaunchedEffect(isBookCreatedEnabled) {
         isBookCreatedEnabled.collect { enabled ->
             if (enabled) {
@@ -81,7 +85,8 @@ fun ProgressScreen(
         onClickCreateBook = { showCreateBookBottomSheet(viewModel.setCreateBookInfo()) },
         isCreatedBook = uiState.isCreatedBook,
         createdBook = uiState.createdBook,
-        onClickBook = { goToBookResultPage() }
+        onClickBook = { goToBookResultPage() },
+        interactionSource = interactionSource
     )
 }
 
@@ -92,7 +97,8 @@ fun ProgressContent(
     onClickCreateBook: () -> Unit = {},
     isCreatedBook: Boolean = false,
     createdBook: CreatedBookModel = CreatedBookModel(),
-    onClickBook: () -> Unit = {}
+    onClickBook: () -> Unit = {},
+    interactionSource: MutableInteractionSource = MutableInteractionSource()
 ) {
     Column(
         modifier = Modifier
@@ -113,7 +119,8 @@ fun ProgressContent(
             onClickEmptyBookBtn = onClickEmptyBookBtn,
             isCreatedBook = isCreatedBook,
             createdBook = createdBook,
-            onClickAction = onClickBook
+            onClickAction = onClickBook,
+            interactionSource = interactionSource
         )
     }
 }
@@ -220,7 +227,8 @@ fun ProgressBookList(
     onClickEmptyBookBtn: () -> Unit,
     isCreatedBook: Boolean,
     createdBook: CreatedBookModel,
-    onClickAction: () -> Unit
+    onClickAction: () -> Unit,
+    interactionSource: MutableInteractionSource
 ) {
     Text(
         text = ProgressBookTitle,
@@ -270,7 +278,8 @@ fun ProgressBookList(
         if (isCreatedBook) {
             ProgressCreatedBook(
                 createdBook = createdBook,
-                onClickAction = onClickAction
+                onClickAction = onClickAction,
+                interactionSource = interactionSource
             )
         } else {
             ProgressBookEmptyContent(
@@ -285,7 +294,8 @@ fun ProgressBookList(
 @Composable
 fun ProgressCreatedBook(
     createdBook: CreatedBookModel,
-    onClickAction: () -> Unit
+    onClickAction: () -> Unit,
+    interactionSource: MutableInteractionSource
 ) {
     Column(
         modifier = Modifier
@@ -297,7 +307,9 @@ fun ProgressCreatedBook(
         Column(
             modifier = Modifier
                 .clickable(
-                    onClick = onClickAction
+                    onClick = onClickAction,
+                    interactionSource = interactionSource,
+                    indication = null
                 ),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -309,7 +321,7 @@ fun ProgressCreatedBook(
             )
 
             Text(
-                text = "인생 기록",
+                text = "혼란을 건너 성장으로",
                 color = Black1,
                 style = BookShelfTypo.body50,
                 modifier = Modifier
