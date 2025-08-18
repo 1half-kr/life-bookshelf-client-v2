@@ -7,13 +7,15 @@ import com.tdd.data.mapper.auth.LogInMapper.toDto
 import com.tdd.domain.entity.request.auth.AuthRequestModel
 import com.tdd.domain.entity.response.auth.AuthResponseModel
 import com.tdd.domain.repository.AuthRepository
+import com.tdd.firebase.fcmtoken.FcmTokenProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val authDataSource: AuthDataSource,
-    private val localDataStore: LocalDataStore
+    private val localDataStore: LocalDataStore,
+    private val fcmTokenProvider: FcmTokenProvider,
 ) : AuthRepository {
 
     override suspend fun postLogIn(request: AuthRequestModel): Flow<Result<AuthResponseModel>> =
@@ -21,5 +23,9 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun saveUserId(request: String): Flow<Result<Boolean>> = flow {
         localDataStore.saveUserId(request)
+    }
+
+    override suspend fun getFcmToken(): Flow<Result<String>> = flow {
+        fcmTokenProvider.getFcmToken()
     }
 }

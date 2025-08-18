@@ -29,6 +29,7 @@ include(":core")
 include(":core:ui")
 include(":core:navigation")
 include(":core:design-system")
+include(":core:firebase")
 
 include(":data")
 include(":domain")

@@ -1,5 +1,6 @@
 package com.tdd.interviewchapter
 
+import androidx.lifecycle.viewModelScope
 import com.tdd.domain.entity.response.interview.InterviewChapterItem
 import com.tdd.domain.entity.response.interview.InterviewChapterModel
 import com.tdd.domain.entity.response.interview.InterviewSubChapterItem
@@ -7,16 +8,28 @@ import com.tdd.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import com.tdd.design_system.R
+import com.tdd.domain.usecase.auth.GetFcmTokenUseCase
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @HiltViewModel
 class InterviewChapterViewModel @Inject constructor(
-
+    private val getFcmTokenUseCase: GetFcmTokenUseCase
 ) : BaseViewModel<InterviewChapterPageState>(
     InterviewChapterPageState()
 ) {
 
     init {
         initSetChapterList()
+        initGetFcmToken()
+    }
+
+    private fun initGetFcmToken() {
+        viewModelScope.launch {
+            getFcmTokenUseCase(Unit).collect { resultResponse(it, { data ->
+                Timber.d("[테스트] -> $data")
+            } )}
+        }
     }
 
     private fun initSetChapterList() {
