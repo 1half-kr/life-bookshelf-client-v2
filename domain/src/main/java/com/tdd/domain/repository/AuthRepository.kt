@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
     suspend fun postLogIn(request: AuthRequestModel): Flow<Result<AuthResponseModel>>
+    suspend fun saveUserId(request: String): Flow<Result<Boolean>>
 }

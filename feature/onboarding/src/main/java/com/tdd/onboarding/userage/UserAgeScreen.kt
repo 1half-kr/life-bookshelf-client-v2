@@ -41,6 +41,16 @@ fun UserAgeScreen(
         viewModel.postLogIn(context)
     }
 
+    LaunchedEffect(Unit) {
+        viewModel.eventFlow.collect { event ->
+            when (event) {
+                is UserAgeEvent.GoToMainPage -> {
+                    //
+                }
+            }
+        }
+    }
+
     UserAgeContent(
         onClickBtnAction = { goToUserGenderPage(viewModel.updateUserModel()) },
         selectedAgeType = uiState.selectedUserAge,
