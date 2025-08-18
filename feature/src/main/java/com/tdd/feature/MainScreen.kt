@@ -186,7 +186,7 @@ fun MainScreen() {
             ) { innerPadding ->
                 NavHost(
                     navController = navController,
-                    startDestination = NavRoutes.InterviewChapterGraph.route,
+                    startDestination = NavRoutes.OnBoardingGraph.route,
                     modifier = Modifier.padding(innerPadding)
                 ) {
                     onBoardingNavGraph(

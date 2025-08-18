@@ -34,7 +34,7 @@ fun BottomNavBar(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(90.dp)
+            .height(70.dp)
             .background(White4),
         horizontalArrangement = Arrangement.spacedBy(60.dp, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically
@@ -73,7 +73,7 @@ fun BottomNavItem(
             contentDescription = "nav",
             tint = Color.Unspecified,
             modifier = Modifier
-                .size(40.dp)
+                .size(25.dp)
         )
 
         Text(

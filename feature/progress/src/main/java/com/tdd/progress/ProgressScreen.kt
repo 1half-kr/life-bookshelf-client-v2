@@ -305,7 +305,7 @@ fun ProgressCreatedBook(
                 painter = painterResource(id = createdBook.bookImg),
                 contentDescription = "book cover",
                 modifier = Modifier
-                    .size(width = 150.dp, height = 200.dp)
+                    .size(width = 120.dp, height = 170.dp)
             )
 
             Text(

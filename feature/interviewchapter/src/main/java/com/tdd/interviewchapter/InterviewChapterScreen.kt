@@ -142,7 +142,7 @@ fun InterviewChapterItem(
             contentDescription = "chapter",
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
-                .size(width = 180.dp, height = 200.dp)
+                .size(width = 160.dp, height = 180.dp)
                 .alpha(if (isValid) 1.0f else 0.6f),
             contentScale = ContentScale.Crop
         )
