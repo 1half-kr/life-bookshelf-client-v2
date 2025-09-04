@@ -1,5 +1,7 @@
 package com.tdd.interviewchapter
 
+import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import com.tdd.domain.entity.response.interview.InterviewChapterItem
 import com.tdd.domain.entity.response.interview.InterviewChapterModel
@@ -9,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import com.tdd.design_system.R
 import com.tdd.domain.usecase.auth.GetFcmTokenUseCase
+import com.tdd.ui.util.UriUtil
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -138,5 +141,13 @@ class InterviewChapterViewModel @Inject constructor(
         )
 
         emitEventFlow(InterviewChapterEvent.ShowChapterBottomSheet)
+    }
+
+    fun setSelectedImg(context: Context, img: Uri?) {
+        updateState(
+            uiState.value.copy(
+                selectedImg = img?.let { UriUtil.uriToFile(context, it) }
+            )
+        )
     }
 }
