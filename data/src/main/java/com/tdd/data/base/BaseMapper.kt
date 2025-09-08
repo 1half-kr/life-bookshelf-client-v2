@@ -9,7 +9,7 @@ import retrofit2.Response
 abstract class BaseMapper {
 
     fun <DTO, MODEL> baseMapper(
-        apiCall: suspend () -> Response<BaseResponse<DTO>>?,
+        apiCall: suspend () -> Response<DTO>?,
         responseToModel: (DTO?) -> MODEL,
     ): Flow<Result<MODEL>> = flow {
         val response = apiCall()
@@ -18,18 +18,13 @@ abstract class BaseMapper {
         response?.let {
             when (response.isSuccessful) {
                 true -> {
-                    val apiResponse: BaseResponse<DTO> = response.body() ?: BaseResponse()
-                    val data = responseToModel(apiResponse.data) ?: defaultModel
+                    val apiResponse: DTO? = response.body()
+                    val data = responseToModel(apiResponse) ?: defaultModel
 
                     emit(Result.success(data))
                 }
 
-                false -> {
-                    val errorBody = response.errorBody()?.string() ?: ""
-                    val errorMessage = fromGson<DTO>(errorBody).error
-
-                    emit(Result.failure(Exception(errorMessage)))
-                }
+                false -> {}
             }
         } ?: emit(Result.success(defaultModel))
 

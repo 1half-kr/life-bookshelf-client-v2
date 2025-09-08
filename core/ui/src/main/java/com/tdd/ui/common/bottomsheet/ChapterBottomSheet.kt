@@ -81,7 +81,7 @@ fun ChapterBottomSheetContent(
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(170.dp)
+                    .height(200.dp)
             )
 
             Text(
@@ -159,7 +159,7 @@ fun ChapterDetailItem(
                 .size(100.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.ic_chapter_one),
+                painter = painterResource(id = subChapter.chapterImg),
                 contentDescription = "sub chapter",
                 modifier = Modifier
                     .clip(RoundedCornerShape(8.dp))

@@ -67,11 +67,11 @@ fun BottomRectangleBtnContent(
         ) {
             Text(
                 text = btnTextContent,
-                style = BookShelfTypo.head20,
+                style = BookShelfTypo.body50,
                 color = if (isBtnActivated) White3 else Gray5,
                 modifier = Modifier
                     .align(Alignment.Center)
-                    .padding(vertical = 20.dp)
+                    .padding(vertical = 15.dp)
             )
         }
     }

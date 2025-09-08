@@ -24,7 +24,7 @@ fun TopPageTitle(
             color = Main3,
             style = BookShelfTypo.head20,
             modifier = Modifier
-                .padding(50.dp)
+                .padding(vertical = 20.dp, horizontal = 50.dp)
         )
     }
 }

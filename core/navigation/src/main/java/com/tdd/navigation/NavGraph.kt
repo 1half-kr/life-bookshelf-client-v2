@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.tdd.domain.entity.request.CreateUserModel
 import com.tdd.domain.entity.response.interview.InterviewChapterItem
+import com.tdd.domain.entity.response.progress.ProgressBookInfoModel
 import com.tdd.interview.main.InterviewMainScreen
 import com.tdd.interview.start.InterviewScreen
 import com.tdd.interview.start.ready.InterviewStartScreen
@@ -16,6 +17,8 @@ import com.tdd.onboarding.education.ScholarShipScreen
 import com.tdd.onboarding.gender.UserGenderScreen
 import com.tdd.onboarding.marriage.MarriageScreen
 import com.tdd.onboarding.userage.UserAgeScreen
+import com.tdd.progress.ProgressScreen
+import com.tdd.progress.resultbook.BookResultScreen
 import kotlinx.coroutines.flow.SharedFlow
 
 fun NavGraphBuilder.onBoardingNavGraph(
@@ -125,6 +128,42 @@ fun NavGraphBuilder.interviewChapterNavGraph(
         composable(NavRoutes.InterviewChapterScreen.route) {
             InterviewChapterScreen(
                 showChapterBottomSheet = showChapterBottomSheet
+            )
+        }
+    }
+}
+
+fun NavGraphBuilder.progressNavGraph(
+    navController: NavController,
+    showCreateBookBottomSheet: (ProgressBookInfoModel) -> Unit,
+    isBookCreatedEnabled: SharedFlow<Boolean>
+) {
+    navigation(
+        startDestination = NavRoutes.ProgressScreen.route,
+        route = NavRoutes.ProgressGraph.route
+    ) {
+        composable(NavRoutes.ProgressScreen.route) {
+            ProgressScreen(
+                goToInterviewPage = {
+                    navController.navigate(NavRoutes.InterviewMainScreen.route) {
+                        popUpTo(0)
+                    }
+                },
+                showCreateBookBottomSheet = showCreateBookBottomSheet,
+                isBookCreatedEnabled = isBookCreatedEnabled,
+                goToBookResultPage = {
+                    navController.navigate(NavRoutes.BookResultScreen.route)
+                }
+            )
+        }
+
+        composable(NavRoutes.BookResultScreen.route) {
+            BookResultScreen(
+                goBack = {
+                    navController.navigate(NavRoutes.ProgressScreen.route) {
+                        popUpTo(0)
+                    }
+                }
             )
         }
     }

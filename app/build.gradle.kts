@@ -5,6 +5,7 @@ plugins {
     id("tdd.android.hilt")
     id("tdd.android.kotlin")
     id("tdd.retrofit")
+    id("com.google.gms.google-services")
 }
 
 val properties = Properties().apply {
@@ -24,6 +25,7 @@ dependencies {
     implementation(projects.feature)
     implementation(projects.domain)
     implementation(projects.core)
+    implementation(projects.core.firebase)
     implementation(projects.data)
 
     implementation(libs.gson)
@@ -31,4 +33,9 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.okhttp.urlconnection)
+
+    // FCM
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.messaging)
 }

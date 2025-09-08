@@ -36,12 +36,15 @@ import androidx.navigation.compose.rememberNavController
 import com.tdd.design_system.White4
 import com.tdd.domain.entity.request.CreateUserModel
 import com.tdd.domain.entity.response.interview.InterviewChapterItem
+import com.tdd.domain.entity.response.progress.ProgressBookInfoModel
 import com.tdd.feature.component.BottomNavBar
 import com.tdd.navigation.NavRoutes
 import com.tdd.navigation.interviewChapterNavGraph
 import com.tdd.navigation.interviewNavGraph
 import com.tdd.navigation.onBoardingNavGraph
+import com.tdd.navigation.progressNavGraph
 import com.tdd.ui.common.bottomsheet.ChapterBottomSheet
+import com.tdd.ui.common.bottomsheet.CreateBookInfoBottomSheet
 import com.tdd.ui.common.dialog.InterviewTypeDialog
 import com.tdd.ui.common.type.BottomSheetType
 import com.tdd.ui.util.DismissKeyboardOnClick
@@ -72,6 +75,10 @@ fun MainScreen() {
     }
     val showChapterBottomSheet: (Int, InterviewChapterItem) -> Unit = { id, item ->
         viewModel.setChapterBottomSheet(id, item)
+        scope.launch { sheetState.show() }
+    }
+    val showCreateBookBottomSheet: (ProgressBookInfoModel) -> Unit = {
+        viewModel.setCreateBookInfoBottomSheet(it)
         scope.launch { sheetState.show() }
     }
 
@@ -126,6 +133,24 @@ fun MainScreen() {
                             )
                         }
 
+                        BottomSheetType.CREATEBOOK -> {
+                            CreateBookInfoBottomSheet(
+                                onClickClose = {
+                                    scope.launch {
+                                        sheetState.hide()
+                                    }
+                                },
+                                bookInfo = uiState.createBookInfo,
+                                onClickCreateBtn = {
+                                    scope.launch {
+                                        sheetState.hide()
+                                        viewModel.isBookCreateEnabled.emit(true)
+                                    }
+                                    navController.navigate(NavRoutes.ProgressScreen.route)
+                                }
+                            )
+                        }
+
                         BottomSheetType.DEFAULT -> {}
                     }
                 }
@@ -176,6 +201,11 @@ fun MainScreen() {
                     interviewChapterNavGraph(
                         navController = navController,
                         showChapterBottomSheet = showChapterBottomSheet
+                    )
+                    progressNavGraph(
+                        navController = navController,
+                        showCreateBookBottomSheet = showCreateBookBottomSheet,
+                        isBookCreatedEnabled = viewModel.isBookCreateEnabled
                     )
                 }
             }

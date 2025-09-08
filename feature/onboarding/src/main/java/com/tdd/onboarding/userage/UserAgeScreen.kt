@@ -8,9 +8,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -32,6 +34,22 @@ fun UserAgeScreen(
 
     val viewModel: UserAgeViewModel = hiltViewModel()
     val uiState: UserAgePageState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        viewModel.postLogIn(context)
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.eventFlow.collect { event ->
+            when (event) {
+                is UserAgeEvent.GoToMainPage -> {
+                    //
+                }
+            }
+        }
+    }
 
     UserAgeContent(
         onClickBtnAction = { goToUserGenderPage(viewModel.updateUserModel()) },

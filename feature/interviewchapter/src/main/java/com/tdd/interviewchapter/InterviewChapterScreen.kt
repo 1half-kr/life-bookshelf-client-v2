@@ -1,5 +1,12 @@
 package com.tdd.interviewchapter
 
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,11 +27,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -49,6 +61,23 @@ fun InterviewChapterScreen(
     val uiState: InterviewChapterPageState by viewModel.uiState.collectAsStateWithLifecycle()
 
     val interactionSource = remember { MutableInteractionSource() }
+    val context = LocalContext.current
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = { uri ->
+            imageUri = uri
+            viewModel.setSelectedImg(context, uri)
+        }
+    )
+    val bitmap = imageUri?.let {
+        if (Build.VERSION.SDK_INT < 28) {
+            MediaStore.Images.Media.getBitmap(context.contentResolver, it)
+        } else {
+            val source = ImageDecoder.createSource(context.contentResolver, it)
+            ImageDecoder.decodeBitmap(source)
+        }
+    }
 
     LaunchedEffect(Unit) {
         viewModel.eventFlow.collect { event ->
@@ -67,7 +96,11 @@ fun InterviewChapterScreen(
         interactionSource = interactionSource,
         chapterList = uiState.chapterList,
         progressChapter = uiState.progressChapter,
-        onClickChapter = { viewModel.selectChapter(it) }
+        onClickChapter = {
+//            viewModel.selectChapter(it)
+            launcher.launch("image/*")
+        },
+        selectedImg = bitmap
     )
 }
 
@@ -78,6 +111,7 @@ fun InterviewChapterContent(
     chapterList: InterviewChapterModel = InterviewChapterModel(),
     progressChapter: InterviewChapterItem = InterviewChapterItem(),
     onClickChapter: (InterviewChapterItem) -> Unit = {},
+    selectedImg: Bitmap? = null,
 ) {
     BoxWithConstraints(
         modifier = Modifier
@@ -109,7 +143,8 @@ fun InterviewChapterContent(
                         isValid = (progressChapter.chapterId == chapter.chapterId),
                         isFinish = (chapter.chapterId < progressChapter.chapterId),
                         onClickAction = { onClickChapter(chapter) },
-                        interactionSource = interactionSource
+                        interactionSource = interactionSource,
+                        selectedImg = selectedImg
                     )
                 }
             }
@@ -124,7 +159,8 @@ fun InterviewChapterItem(
     isValid: Boolean,
     isFinish: Boolean,
     onClickAction: () -> Unit,
-    interactionSource: MutableInteractionSource
+    interactionSource: MutableInteractionSource,
+    selectedImg: Bitmap?,
 ) {
     Column(
         modifier = modifier
@@ -136,14 +172,71 @@ fun InterviewChapterItem(
             ),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Image(
-            painter = painterResource(id = ChapterType.getChapterImg(chapter.chapterId)),
-            contentDescription = "chapter",
-            modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
-                .size(width = 180.dp, height = 200.dp)
-                .alpha(if (isValid) 1.0f else 0.6f)
-        )
+//        Image(
+//            painter = painterResource(id = ChapterType.getChapterImg(chapter.chapterId)),
+//            contentDescription = "chapter",
+//            modifier = Modifier
+//                .clip(RoundedCornerShape(8.dp))
+//                .size(width = 160.dp, height = 180.dp)
+//                .alpha(if (isValid) 1.0f else 0.6f),
+//            contentScale = ContentScale.Crop
+//        )
+        if (chapter.chapterId == 1) {
+            if (selectedImg == null) {
+                Image(
+                    painter = painterResource(id = ChapterType.getChapterImg(chapter.chapterId)),
+                    contentDescription = "chapter",
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(8.dp))
+                        .size(width = 160.dp, height = 180.dp)
+                        .alpha(if (isValid) 1.0f else 0.6f),
+                    contentScale = ContentScale.Crop
+                )
+            } else {
+                Image(
+                    bitmap = selectedImg.asImageBitmap(),
+                    contentDescription = "selected image",
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(8.dp))
+                        .size(width = 160.dp, height = 180.dp)
+                        .alpha(if (isValid) 1.0f else 0.6f),
+                    contentScale = ContentScale.Crop
+                )
+            }
+        } else {
+            Image(
+                painter = painterResource(id = ChapterType.getChapterImg(chapter.chapterId)),
+                contentDescription = "chapter",
+                modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .size(width = 160.dp, height = 180.dp)
+                    .alpha(if (isValid) 1.0f else 0.6f),
+                contentScale = ContentScale.Crop
+            )
+        }
+
+//        if (selectedImg == null) {
+//            Image(
+//                painter = painterResource(id = ChapterType.getChapterImg(chapter.chapterId)),
+//                contentDescription = "chapter",
+//                modifier = Modifier
+//                    .clip(RoundedCornerShape(8.dp))
+//                    .size(width = 160.dp, height = 180.dp)
+//                    .alpha(if (isValid) 1.0f else 0.6f),
+//                contentScale = ContentScale.Crop
+//            )
+//        } else {
+//            Image(
+//                bitmap = selectedImg.asImageBitmap(),
+//                contentDescription = "selected image",
+//                modifier = Modifier
+//                    .clip(RoundedCornerShape(8.dp))
+//                    .size(width = 160.dp, height = 180.dp)
+//                    .alpha(if (isValid) 1.0f else 0.6f),
+//                contentScale = ContentScale.Crop
+//            )
+//        }
+
 
         Spacer(modifier = Modifier.height(10.dp))
 

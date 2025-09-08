@@ -31,7 +31,7 @@ class InterviewViewModel @Inject constructor(
             for (i in 0..3) {
                 val subList = chattings.take(i + 1)
                 updateChatting(subList)
-                delay(1000L)
+                delay(if (i % 2 != 0) 1000L else 3000L)
             }
         }
     }
